@@ -8,4 +8,4 @@
  * "noc" for "not C", cause math.c may be in standard C libs.
  */
 
-
+// Use external library: Eigen version 3
