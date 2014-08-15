@@ -12,7 +12,7 @@
 void init_test( model *m, vector *B, vector *S, vector *U,
 		scalar *w, scalar *r, int *nx, int *ny ) {
 
-	m->triangles_count = 2;
+	m->triangles_count = 4;
 	m->triangles = (triangle*)malloc(sizeof(triangle)*m->triangles_count);
 
 	m->triangles[0].p[0](0) = 3;
@@ -28,21 +28,50 @@ void init_test( model *m, vector *B, vector *S, vector *U,
 	m->triangles[0].color(1) = 0;
 	m->triangles[0].color(2) = 0;
 	m->triangles[0].color(3) = 1;
-	m->triangles[0].p[0](0) = 3;
 
-	m->triangles[0].p[0](0) = 3;
+	m->triangles[1].p[0](0) = 3;
 	m->triangles[1].p[0](1) = -1;
-	m->triangles[1].p[0](2) = 5;
+	m->triangles[1].p[0](2) = 2;
 	m->triangles[1].p[1](0) = 3;
 	m->triangles[1].p[1](1) = 1;
-	m->triangles[1].p[1](2) = 4;
+	m->triangles[1].p[1](2) = 1;
 	m->triangles[1].p[2](0) = 3;
 	m->triangles[1].p[2](1) = -1;
-	m->triangles[1].p[2](2) = 3;
+	m->triangles[1].p[2](2) = 0;
 	m->triangles[1].color(0) = 0;
 	m->triangles[1].color(1) = 1;
 	m->triangles[1].color(2) = 0;
 	m->triangles[1].color(3) = 1;
+
+	m->triangles[2].p[0](0) = 3;
+	m->triangles[2].p[0](1) = 4;
+	m->triangles[2].p[0](2) = -3;
+	m->triangles[2].p[1](0) = 3;
+	m->triangles[2].p[1](1) = 6;
+	m->triangles[2].p[1](2) = -4;
+	m->triangles[2].p[2](0) = 3;
+	m->triangles[2].p[2](1) = 4;
+	m->triangles[2].p[2](2) = -5;
+	m->triangles[2].color(0) = 0;
+	m->triangles[2].color(1) = 1;
+	m->triangles[2].color(2) = 1;
+	m->triangles[2].color(3) = 1;
+
+	m->triangles[3].p[0](0) = 3;
+	m->triangles[3].p[0](1) = 4;
+	m->triangles[3].p[0](2) = 2;
+	m->triangles[3].p[1](0) = 3;
+	m->triangles[3].p[1](1) = 6;
+	m->triangles[3].p[1](2) = 1;
+	m->triangles[3].p[2](0) = 3;
+	m->triangles[3].p[2](1) = 4;
+	m->triangles[3].p[2](2) = 0;
+	m->triangles[3].color(0) = 1;
+	m->triangles[3].color(1) = 1;
+	m->triangles[3].color(2) = 0;
+	m->triangles[3].color(3) = 1;
+
+
 
 	(*B)(0) = 1;
 	(*B)(1) = 0;
@@ -100,13 +129,13 @@ int main(int argc, char **argv) {
 		pic(nx/2,y)->Red=255;
 	}
 	for( x = 0; x < nx; x++ ) {
-			pic(x,ny/2)->Alpha=255;
-			pic(x,ny/2)->Blue=255;
-			pic(x,ny/2)->Green=255;
-			pic(x,ny/2)->Red=255;
-		}
+		pic(x,ny/2)->Alpha=255;
+		pic(x,ny/2)->Blue=255;
+		pic(x,ny/2)->Green=255;
+		pic(x,ny/2)->Red=255;
+	}
 
-	pic.WriteToFile("testoutput.bmp");
+	pic.WriteToFile("testoutput/pic1.bmp");
 	printf("Done\n");
 
 	return 0;
