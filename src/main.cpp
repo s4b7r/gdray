@@ -5,9 +5,7 @@
  *      Author: sieb
  */
 
-
-#include "raytrace.h"
-
+#include "head.h"
 
 void init_test( model *m, vector *B, vector *S, vector *U,
 		scalar *w, scalar *r, int *nx, int *ny ) {

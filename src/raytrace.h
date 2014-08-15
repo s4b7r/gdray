@@ -8,18 +8,7 @@
 #ifndef RAYTRACE_H_
 #define RAYTRACE_H_
 
-
-#include <stdio.h>
-
 #include <Eigen/Dense>
-using Eigen::Vector3d;
-using Eigen::Vector4d;
-using Eigen::Matrix3d;
-
-#include "EasyBMP/EasyBMP.h"
-
-#include "math_noc.cpp"
-#include "model.cpp"
 
 typedef Vector4d color;
 typedef Vector3d vector;
@@ -78,6 +67,7 @@ ray getRayThroughPx(
  * Calculate intersection between ray and given triangle.
  */
 scalar intersectRayTriangle(
+		model m,
 		ray r, triangle t,
 		color *c );
 /*

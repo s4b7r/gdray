@@ -7,8 +7,7 @@
  * The raytracing routines.
  */
 
-#include "raytrace.h"
-
+#include "head.h"
 
 void getPxDisplaceVec(
 		vector B, vector S, vector U,
@@ -55,8 +54,8 @@ ray getRayThroughPx(
 
 }
 
-
 scalar intersectRayTriangle(
+		model m,
 		ray r, triangle t,
 		color *c ) {
 
@@ -70,12 +69,13 @@ scalar intersectRayTriangle(
 		return 0;
 	}
 
+	vector I = r.point + r.direction * x(0);
+
 	*c = t.color;
+	//*c = getColor((Vector3d)I, r, t.color, t.normal, m);
 	return x(0);
 
 }
-
-
 
 color intersectRayWorld(
 		ray r, model m ) {
@@ -90,7 +90,7 @@ color intersectRayWorld(
 
 	for( i = 0; i < m.triangles_count; i++ ) {
 
-		if( (d=intersectRayTriangle(r, m.triangles[i], &c))>1 && (d < dmin || dmin==-1) ) {
+		if( (d=intersectRayTriangle(m, r, m.triangles[i], &c))>1 && (d < dmin || dmin==-1) ) {
 			dmin = d;
 			cmin = c;
 		}
@@ -100,7 +100,6 @@ color intersectRayWorld(
 	return cmin;
 
 }
-
 
 color tracePx(
 		vector B, vector S,
@@ -123,8 +122,6 @@ color tracePx(
 	return color;
 
 }
-
-
 
 void traceAll(
 		vector B, vector S,

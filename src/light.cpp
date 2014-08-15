@@ -4,17 +4,9 @@
  *  Created on: Aug 11, 2014
  *      Author: kevin
  */
-#define STEP 0.1
 
-#include "Eigen/Dense"
-#include "model.cpp"
-#include <cmath>
-#include <algorithm>
+#include "head.h"
 
-enum dimension {X = 0, Y = 1, Z = 2};
-
-using Eigen::Vector4d;
-using Eigen::Vector3d;
 using std::acos;
 using std::max;
 
@@ -31,6 +23,7 @@ bool getIfInsideTriangle(Vector3d p[3], Vector3d testPunkt){
 }
 
 Vector4d getColor(Vector3d schnittpunkt, /*structray strahl,*/ Vector4d farbe, Vector3d normale, model modell){
+//Vector4d getColor(Vector3d schnittpunkt, ray strahl, Vector4d farbe, Vector3d normale, model modell){
 	Vector4d ret(0,0,0,1);
 
 	// Diffuses Licht unabhängig von Beobachter
