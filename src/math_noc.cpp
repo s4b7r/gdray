@@ -9,3 +9,14 @@
  */
 
 // Use external library: Eigen version 3
+
+#include <Eigen/Dense>
+using Eigen::Vector3d;
+
+struct ray {
+
+	Vector3d point;
+	Vector3d direction;
+
+};
+typedef struct ray ray;

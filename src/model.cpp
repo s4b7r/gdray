@@ -7,15 +7,22 @@
  * World, objects, models, triangles ...
  */
 
+#include <Eigen/Dense>
+using Eigen::Vector3d;
+using Eigen::Vector4d;
+
+struct triangle {
+
+	Vector4d color;
+	Vector3d normal;
+	Vector3d p[3];
+
+};
+typedef struct triangle triangle;
+
 struct model {
 
-	struct triangle {
-
-		Vector4d color;
-		Vector3d normal;
-		Vector3d p[3];
-
-	} *triangles;
+	triangle *triangles;
 
 	struct lightsource {
 
@@ -28,3 +35,4 @@ struct model {
 	int lightsources_count;
 
 };
+typedef struct model model;
