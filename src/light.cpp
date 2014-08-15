@@ -27,7 +27,7 @@ Vector4d getColor(Vector3d schnittpunkt, /*structray strahl,*/ Vector4d farbe, V
 	Vector4d ret(0,0,0,1);
 
 	// Diffuses Licht unabhängig von Beobachter
-	for(int i=0;i<modell.lightsources_count;i++){	//TODO: Nur zu sehen wenn auf dem Weg vom Schnittpunkt zur Lichtquelle kein anderes Objekt liegt
+	for(int i=0;i<modell.lightsources_count;i++){
 		bool proxybool = false;
 
 		Vector3d sl = modell.lightsources[i].p - schnittpunkt; //Vektor vom Schnittpunkt zur Lichtquelle
