@@ -139,7 +139,7 @@ void traceAll(
 	for( y = 0; y < ny; y++ ) {
 		for( x = 0; x < nx; x++ ) {
 
-			printf("Progress: %d\%\033[13D", 100*(x+y*nx)/(ny*nx));
+			printf("Progress: %d\n", 100*(x+y*nx)/(ny*nx));
 			c = tracePx(B, S, nx, ny, dx, dy, m, x, y);
 			//printf("x:%d y:%d c:%f %f %f %f\n", x, y, c(0), c(1), c(2), c(3));
 			(*pic)(x, y)->Red = c(0)*255;

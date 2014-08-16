@@ -22,6 +22,7 @@ struct lightsource {
 		Vector4d color;
 		Vector3d p;
 };
+typedef struct lightsource lightsource;
 
 struct model {
 
