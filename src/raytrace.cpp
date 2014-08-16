@@ -57,7 +57,8 @@ ray getRayThroughPx(
 scalar intersectRayTriangle(
 		model m,
 		ray r, triangle t,
-		color *c ) {
+		color *c ,
+		int tIndex) {
 
 	Matrix3d A;
 	A.col(0) = r.direction * -1;
@@ -69,12 +70,10 @@ scalar intersectRayTriangle(
 		return 0;
 	}
 
-	t.normal = ((t.p[1]-t.p[0]).cross(t.p[2]-t.p[0])).normalized();
-
 	vector I = r.point + r.direction * x(0);
 
 	//*c = t.color;
-	*c = getColor((Vector3d)I, r, t.color, t.normal, m);
+	*c = getColor((Vector3d)I, r, t.color, t.normal, m, tIndex);
 	return x(0);
 
 }
@@ -92,7 +91,7 @@ color intersectRayWorld(
 
 	for( i = 0; i < m.triangles_count; i++ ) {
 
-		if( (d=intersectRayTriangle(m, r, m.triangles[i], &c))>1 && (d < dmin || dmin==-1) ) {
+		if( (d=intersectRayTriangle(m, r, m.triangles[i], &c, i))>1 && (d < dmin || dmin==-1) ) {
 			dmin = d;
 			cmin = c;
 		}

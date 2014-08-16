@@ -69,7 +69,8 @@ ray getRayThroughPx(
 scalar intersectRayTriangle(
 		model m,
 		ray r, triangle t,
-		color *c );
+		color *c ,
+		int tIndex);
 /*
  * todo comments
  */
