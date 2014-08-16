@@ -40,7 +40,7 @@ struct set {
 	BMP pic;
 	model m;
 	Vector3d B, S, U, dx, dy;
-	Vector4d w, r;
+	double w, r;
 	int nx, ny;
 
 };

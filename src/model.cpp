@@ -298,6 +298,21 @@ void loadSet( set *set, char *filename ) {
 
 void saveSet( set *set, char *filename ) {
 
-	// todo implement saveSet()
+	/*struct set {
+
+		BMP pic;
+		model m;
+		Vector3d B, S, U, dx, dy;
+		double w, r;
+		int nx, ny;
+
+	};*/
+
+	FILE *file;
+	mxml_node_t *xml;
+
+	xml = mxmlNewXML("1.0");
+
+
 
 }

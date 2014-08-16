@@ -14,7 +14,7 @@ int main(int argc, char **argv) {
 	if( (argc == 2 && strcmp(argv[1], "--run-test")) || DEV_TEST ) {
 		test_start();
 	} else if( argc == 1 ) {
-		printf("Use: GD_Ray XML-FILE OUTPUT-FILE\n");
+		printf("General use: GD_Ray SET-FILE OUTPUT-FILE\n");
 		printf("or: GD_Ray --help\n");
 		return 0;
 	} else if( argc == 2 && strcmp(argv[1], "--help") ) {
