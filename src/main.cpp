@@ -161,15 +161,19 @@ void init_test2( model *m, vector *B, vector *S, vector *U,
 
 int main(int argc, char **argv) {
 
-	BMP pic;
-	model m;
+	BMP pic1, pic2;
+	model m1, m2;
 	vector B, S, U, dx, dy;
 	scalar w, r;
 	int nx, ny;
 	int x, y;
 
-	init_test2(&m, &B, &S, &U, &w, &r, &nx, &ny);
-
+	init_test1(&m1, &B, &S, &U, &w, &r, &nx, &ny);
+	saveModel(m1, "testoutput/model1.xml");
+	loadModel(&m2, "testoutput/model1.xml");
+	saveModel(m2, "testoutput/model1_2.xml");
+	//printf("end\n");
+	//return 0;
 
 	//printf("t_c %d\n", m.triangles_count);
 	//printf("t0p0 %f %f %f\n", m.triangles[0].p[0](0), m.triangles[0].p[0](1), m.triangles[0].p[0](2));
@@ -187,25 +191,46 @@ int main(int argc, char **argv) {
 	//printf("dx %f %f %f\n", dx(0), dx(1), dx(2));
 	//printf("dy %f %f %f\n", dy(0), dy(1), dy(2));
 
-	pic.SetSize(nx, ny);
-	pic.SetBitDepth(32);
+	pic1.SetSize(nx, ny);
+	pic1.SetBitDepth(32);
 
-	traceAll(B, S, nx, ny, dx, dy, m, &pic);
+	traceAll(B, S, nx, ny, dx, dy, m1, &pic1);
 
 	for( y = 0; y < ny; y++ ) {
-		pic(nx/2,y)->Alpha=255;
-		pic(nx/2,y)->Blue=255;
-		pic(nx/2,y)->Green=255;
-		pic(nx/2,y)->Red=255;
+		pic1(nx/2,y)->Alpha=255;
+		pic1(nx/2,y)->Blue=255;
+		pic1(nx/2,y)->Green=255;
+		pic1(nx/2,y)->Red=255;
 	}
 	for( x = 0; x < nx; x++ ) {
-		pic(x,ny/2)->Alpha=255;
-		pic(x,ny/2)->Blue=255;
-		pic(x,ny/2)->Green=255;
-		pic(x,ny/2)->Red=255;
+		pic1(x,ny/2)->Alpha=255;
+		pic1(x,ny/2)->Blue=255;
+		pic1(x,ny/2)->Green=255;
+		pic1(x,ny/2)->Red=255;
 	}
 
-	pic.WriteToFile("testoutput/pic2.bmp");
+	pic1.WriteToFile("testoutput/pic3_1.bmp");
+	printf("Done\n");
+
+	pic2.SetSize(nx, ny);
+	pic2.SetBitDepth(32);
+
+	traceAll(B, S, nx, ny, dx, dy, m2, &pic2);
+
+	for( y = 0; y < ny; y++ ) {
+		pic2(nx/2,y)->Alpha=255;
+		pic2(nx/2,y)->Blue=255;
+		pic2(nx/2,y)->Green=255;
+		pic2(nx/2,y)->Red=255;
+	}
+	for( x = 0; x < nx; x++ ) {
+		pic2(x,ny/2)->Alpha=255;
+		pic2(x,ny/2)->Blue=255;
+		pic2(x,ny/2)->Green=255;
+		pic2(x,ny/2)->Red=255;
+	}
+
+	pic2.WriteToFile("testoutput/pic3_2.bmp");
 	printf("Done\n");
 
 	return 0;

@@ -27,12 +27,16 @@ typedef struct lightsource lightsource;
 struct model {
 
 	triangle *triangles;
-	lightsource  *lightsources;
+	lightsource *lightsources;
 
 	int triangles_count;
 	int lightsources_count;
 
 };
 typedef struct model model;
+
+void loadModel( model *m, char *filename );
+void saveModel( model m, char *filename );
+void fileToHumanReadableFile( char *filename );
 
 #endif /* MODEL_H_ */
