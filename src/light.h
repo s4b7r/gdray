@@ -8,7 +8,7 @@
 #ifndef LIGHT_H_
 #define LIGHT_H_
 
-#define STEP 0.05
+#define STEP 0.1
 
 enum dimension {X = 0, Y = 1, Z = 2};
 
