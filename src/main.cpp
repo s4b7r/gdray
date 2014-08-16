@@ -175,9 +175,9 @@ int main(int argc, char **argv) {
 	//printf("end\n");
 	//return 0;
 
-	for(int i=0;i<m.triangles_count;i++){
-		m.triangles[i].normal = ((m.triangles[i].p[1]-m.triangles[i].p[0]).cross(m.triangles[i].p[2]-m.triangles[i].p[0])).normalized();
-	}
+	fillNormals(&m1);
+	fillNormals(&m2);
+
 	//printf("t_c %d\n", m.triangles_count);
 	//printf("t0p0 %f %f %f\n", m.triangles[0].p[0](0), m.triangles[0].p[0](1), m.triangles[0].p[0](2));
 	//printf("t0p1 %f %f %f\n", m.triangles[0].p[1](0), m.triangles[0].p[1](1), m.triangles[0].p[1](2));

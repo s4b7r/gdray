@@ -281,3 +281,11 @@ void loadModel( model *m, char *filename ) {
 	//printf("dbg cp 5\n");
 
 }
+
+void fillNormals( model *m ) {
+
+	for(int i=0;i<m->triangles_count;i++){
+		m->triangles[i].normal = ((m->triangles[i].p[1]-m->triangles[i].p[0]).cross(m->triangles[i].p[2]-m->triangles[i].p[0])).normalized();
+	}
+
+}
