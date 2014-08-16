@@ -20,7 +20,7 @@ void init_test( model *m, vector *B, vector *S, vector *U,
 	m->lightsources[0].color(1) = 1;
 	m->lightsources[0].color(2) = 1;
 
-	m->triangles_count = 4;
+	m->triangles_count = 2;
 	m->triangles = (triangle*)malloc(sizeof(triangle)*m->triangles_count);
 
 	/*m->triangles[0].p[0](0) = 6;
@@ -108,6 +108,9 @@ int main(int argc, char **argv) {
 
 	init_test(&m, &B, &S, &U, &w, &r, &nx, &ny);
 
+	for(int i=0;i<m.triangles_count;i++){
+		m.triangles[i].normal = ((m.triangles[i].p[1]-m.triangles[i].p[0]).cross(m.triangles[i].p[2]-m.triangles[i].p[0])).normalized();
+	}
 
 	//printf("t_c %d\n", m.triangles_count);
 	//printf("t0p0 %f %f %f\n", m.triangles[0].p[0](0), m.triangles[0].p[0](1), m.triangles[0].p[0](2));
