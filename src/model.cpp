@@ -289,3 +289,15 @@ void fillNormals( model *m ) {
 	}
 
 }
+
+void loadSet( set *set, char *filename ) {
+
+	// todo implement loadSet()
+
+}
+
+void saveSet( set *set, char *filename ) {
+
+	// todo implement saveSet()
+
+}

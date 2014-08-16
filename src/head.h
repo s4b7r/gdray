@@ -28,5 +28,6 @@ using Eigen::Matrix3d;
 #include "model.h"
 #include "light.h"
 #include "raytrace.h"
+#include "testing.h"
 
 #endif /* HEAD_H_ */

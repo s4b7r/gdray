@@ -5,6 +5,8 @@
  *      Author: sieb
  */
 
+#include "head.h"
+
 void init_test1( model *m, vector *B, vector *S, vector *U,
 		scalar *w, scalar *r, int *nx, int *ny ) {
 
