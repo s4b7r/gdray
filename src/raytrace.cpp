@@ -127,7 +127,8 @@ void traceAll(
 	for( y = 0; y < set.ny; y++ ) {
 		for( x = 0; x < set.nx; x++ ) {
 
-			printf("Progress: %d\n", 100*(x+y*set.nx)/(set.ny * set.nx));
+			//printf("Progress: %d\n", 100*(x+y*set.nx)/(set.ny * set.nx));
+			// todo maybe there is some nicer way to display progress
 			c = tracePx(set, x, y);
 			//printf("x:%d y:%d c:%f %f %f %f\n", x, y, c(0), c(1), c(2), c(3));
 			(*pic)(x, y)->Red = c(0)*255;
