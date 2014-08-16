@@ -10,16 +10,26 @@
 void init_test( model *m, vector *B, vector *S, vector *U,
 		scalar *w, scalar *r, int *nx, int *ny ) {
 
+	m->lightsources_count = 1;
+	m->lightsources = (lightsource*)malloc(sizeof(lightsource)*m->lightsources_count);
+
+	m->lightsources[0].p(X) = -7;
+	m->lightsources[0].p(Y) = 0;
+	m->lightsources[0].p(Z) = 0;
+	m->lightsources[0].color(0) = 0.5;
+	m->lightsources[0].color(1) = 0.5;
+	m->lightsources[0].color(2) = 1;
+
 	m->triangles_count = 4;
 	m->triangles = (triangle*)malloc(sizeof(triangle)*m->triangles_count);
 
-	m->triangles[0].p[0](0) = 3;
+	m->triangles[0].p[0](0) = 6;
 	m->triangles[0].p[0](1) = -1;
 	m->triangles[0].p[0](2) = -3;
-	m->triangles[0].p[1](0) = 3;
+	m->triangles[0].p[1](0) = 2;
 	m->triangles[0].p[1](1) = 1;
 	m->triangles[0].p[1](2) = -4;
-	m->triangles[0].p[2](0) = 3;
+	m->triangles[0].p[2](0) = 1;
 	m->triangles[0].p[2](1) = -1;
 	m->triangles[0].p[2](2) = -5;
 	m->triangles[0].color(0) = 1;
@@ -80,8 +90,8 @@ void init_test( model *m, vector *B, vector *S, vector *U,
 	(*U)(0) = 0;
 	(*U)(1) = 1;
 	(*U)(2) = 0;
-	*nx = 640;
-	*ny = 480;
+	*nx = 128;
+	*ny = 96;
 	*w = 10;
 	*r = (double)*nx / (double)*ny;
 

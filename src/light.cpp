@@ -9,6 +9,8 @@
 
 using std::acos;
 using std::max;
+using std::cout;
+using std::endl;
 
 bool getIfInsideTriangle(Vector3d p[3], Vector3d testPunkt){
 	for(double x=0.0;x<=(p[1]-p[0]).norm();x+=STEP){
@@ -22,8 +24,9 @@ bool getIfInsideTriangle(Vector3d p[3], Vector3d testPunkt){
 	return false;
 }
 
-Vector4d getColor(Vector3d schnittpunkt, /*structray strahl,*/ Vector4d farbe, Vector3d normale, model modell){
-//Vector4d getColor(Vector3d schnittpunkt, ray strahl, Vector4d farbe, Vector3d normale, model modell){
+//Vector4d getColor(Vector3d schnittpunkt, /*structray strahl,*/ Vector4d farbe, Vector3d normale, model modell){
+Vector4d getColor(Vector3d schnittpunkt, ray strahl, Vector4d farbe, Vector3d normale, model modell){
+	//if(normale.norm())cout << "Schnittpunkt: \n" << schnittpunkt << endl << "farbe: \n" << farbe << endl << "Normale: \n" << normale;
 	Vector4d ret(0,0,0,1);
 
 	// Diffuses Licht unabhängig von Beobachter
@@ -33,17 +36,18 @@ Vector4d getColor(Vector3d schnittpunkt, /*structray strahl,*/ Vector4d farbe, V
 		Vector3d sl = modell.lightsources[i].p - schnittpunkt; //Vektor vom Schnittpunkt zur Lichtquelle
 
 
-		for(int k=0;k<modell.triangles_count;k++){
+		/*for(int k=0;k<modell.triangles_count;k++){
 			for(double j=0.0;j<=sl.norm();j+=STEP){
 				if(getIfInsideTriangle(modell.triangles[k].p, schnittpunkt + ((j/sl.norm())*sl))){
 					proxybool = true;
 				}
 			}
-		}
+		}*/
+
 		if(!proxybool){
 			long double cosAlpha = normale.dot(sl.normalized());
 
-			if(acos(cosAlpha) < 90){
+			if(acos(cosAlpha) < 1.570796327){
 				ret += cosAlpha * modell.lightsources[i].color;
 			}
 

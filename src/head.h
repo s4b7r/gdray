@@ -10,7 +10,9 @@
 
 #include <cmath>
 #include <algorithm>
-#include <stdio.h>
+#include <cstdio>
+#include <cstdlib>
+#include <iostream>
 
 #include "Eigen/Dense"
 using Eigen::Vector4d;

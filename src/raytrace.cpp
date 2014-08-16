@@ -69,10 +69,12 @@ scalar intersectRayTriangle(
 		return 0;
 	}
 
+	t.normal = ((t.p[1]-t.p[0]).cross(t.p[2]-t.p[0])).normalized();
+
 	vector I = r.point + r.direction * x(0);
 
-	*c = t.color;
-	//*c = getColor((Vector3d)I, r, t.color, t.normal, m);
+	//*c = t.color;
+	*c = getColor((Vector3d)I, r, t.color, t.normal, m);
 	return x(0);
 
 }
@@ -137,6 +139,7 @@ void traceAll(
 	for( y = 0; y < ny; y++ ) {
 		for( x = 0; x < nx; x++ ) {
 
+			printf("Progress: %d\%\033[13D", 100*(x+y*nx)/(ny*nx));
 			c = tracePx(B, S, nx, ny, dx, dy, m, x, y);
 			//printf("x:%d y:%d c:%f %f %f %f\n", x, y, c(0), c(1), c(2), c(3));
 			(*pic)(x, y)->Red = c(0)*255;

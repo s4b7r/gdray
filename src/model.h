@@ -17,16 +17,16 @@ struct triangle {
 };
 typedef struct triangle triangle;
 
-struct model {
-
-	triangle *triangles;
-
-	struct lightsource {
+struct lightsource {
 
 		Vector4d color;
 		Vector3d p;
+};
 
-	} *lightsources;
+struct model {
+
+	triangle *triangles;
+	lightsource  *lightsources;
 
 	int triangles_count;
 	int lightsources_count;
