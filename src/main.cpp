@@ -9,18 +9,40 @@
 
 #define DEV_TEST 1
 
+void standard( char *modelfile, char *outputfile ) {
+
+	BMP pic;
+	set set;
+
+	loadModel(&set, modelfile);
+
+	fillNormals(&(set.m));
+	getPxDisplaceVec(&set);
+
+	pic.SetSize(set.nx, set.ny);
+	pic.SetBitDepth(32);
+	traceAll(set, &pic);
+
+	pic.WriteToFile(outputfile);
+
+}
+
 int main(int argc, char **argv) {
 
 	if( (argc == 2 && strcmp(argv[1], "--run-test")) || DEV_TEST ) {
+		// Run developer's test
 		test_start();
 	} else if( argc == 1 ) {
-		printf("General use: GD_Ray SET-FILE OUTPUT-FILE\n");
+		// You forgot all the beautiful arguments!
+		printf("General use: GD_Ray MODELFILE OUTPUTFILE\n");
 		printf("or: GD_Ray --help\n");
 		return 0;
 	} else if( argc == 2 && strcmp(argv[1], "--help") ) {
+		// Read this for more details...
 		// todo print help
 	} else if( argc == 3 ) {
-		// todo standard procedure
+		// Run the standard procedure
+		standard(argv[1], argv[2]);
 	}
 
 	return 0;

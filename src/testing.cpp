@@ -7,6 +7,17 @@
 
 #include "head.h"
 
+/*
+ * NOTICE:
+ *
+ * All these strange referencing/dereferencing-combinations are the result
+ * of multiple search-and-replaces.
+ * Not going to beautify this, because this routines are for developer's
+ * testing purposes only.
+ *
+ */
+
+
 void init_test1( set *set ) {
 
 	(&(set->m))->lightsources_count = 1;
