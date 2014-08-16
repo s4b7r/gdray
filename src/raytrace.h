@@ -21,10 +21,7 @@ typedef double scalar;
  * and the upper and the right pixel.
  */
 void getPxDisplaceVec(
-		vector B, vector S, vector U,
-		scalar w, scalar r,
-		int nx, int ny,
-		vector *dx, vector *dy );
+		set *set );
 /*
  *
  * B = world origin -> camera point
@@ -95,10 +92,7 @@ color intersectRayWorld(
  * Perform raytracing for one pixel.
  */
 color tracePx(
-		vector B, vector S,
-		int nx, int ny,
-		vector dx, vector dy,
-		model m,
+		set set,
 		int x, int y );
 /*
  *
@@ -116,10 +110,7 @@ color tracePx(
  * Could return some kind of picture one day.
  */
 void traceAll(
-		vector B, vector S,
-		int nx, int ny,
-		vector dx, vector dy,
-		model m,
+		set set,
 		BMP *pic );
 /*
  * just check the other comments for this variables, please

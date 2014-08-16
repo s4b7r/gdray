@@ -7,174 +7,168 @@
 
 #include "head.h"
 
-void init_test1( model *m, vector *B, vector *S, vector *U,
-		scalar *w, scalar *r, int *nx, int *ny ) {
+void init_test1( set *set ) {
 
-	m->lightsources_count = 1;
-	m->lightsources = (lightsource*)malloc(sizeof(lightsource)*m->lightsources_count);
+	(&(set->m))->lightsources_count = 1;
+	(&(set->m))->lightsources = (lightsource*)malloc(sizeof(lightsource)*(&(set->m))->lightsources_count);
 
-	m->lightsources[0].p(X) = 0;
-	m->lightsources[0].p(Y) = 0;
-	m->lightsources[0].p(Z) = 2;
-	m->lightsources[0].color(0) = 1;
-	m->lightsources[0].color(1) = 1;
-	m->lightsources[0].color(2) = 1;
+	(&(set->m))->lightsources[0].p(X) = 0;
+	(&(set->m))->lightsources[0].p(Y) = 0;
+	(&(set->m))->lightsources[0].p(Z) = 2;
+	(&(set->m))->lightsources[0].color(0) = 1;
+	(&(set->m))->lightsources[0].color(1) = 1;
+	(&(set->m))->lightsources[0].color(2) = 1;
 
-	m->triangles_count = 2;
-	m->triangles = (triangle*)malloc(sizeof(triangle)*m->triangles_count);
+	(&(set->m))->triangles_count = 2;
+	(&(set->m))->triangles = (triangle*)malloc(sizeof(triangle)*(&(set->m))->triangles_count);
 
-	m->triangles[0].p[0](0) = 3;
-	m->triangles[0].p[0](1) = 0;
-	m->triangles[0].p[0](2) = 2;
-	m->triangles[0].p[1](0) = 3;
-	m->triangles[0].p[1](1) = 2;
-	m->triangles[0].p[1](2) = 1;
-	m->triangles[0].p[2](0) = 3;
-	m->triangles[0].p[2](1) = 0;
-	m->triangles[0].p[2](2) = 0;
-	m->triangles[0].color(0) = 0;
-	m->triangles[0].color(1) = 1;
-	m->triangles[0].color(2) = 0;
-	m->triangles[0].color(3) = 1;
+	(&(set->m))->triangles[0].p[0](0) = 3;
+	(&(set->m))->triangles[0].p[0](1) = 0;
+	(&(set->m))->triangles[0].p[0](2) = 2;
+	(&(set->m))->triangles[0].p[1](0) = 3;
+	(&(set->m))->triangles[0].p[1](1) = 2;
+	(&(set->m))->triangles[0].p[1](2) = 1;
+	(&(set->m))->triangles[0].p[2](0) = 3;
+	(&(set->m))->triangles[0].p[2](1) = 0;
+	(&(set->m))->triangles[0].p[2](2) = 0;
+	(&(set->m))->triangles[0].color(0) = 0;
+	(&(set->m))->triangles[0].color(1) = 1;
+	(&(set->m))->triangles[0].color(2) = 0;
+	(&(set->m))->triangles[0].color(3) = 1;
 
-	m->triangles[1].p[0](0) = 6;
-	m->triangles[1].p[0](1) = 10;
-	m->triangles[1].p[0](2) = 10;
-	m->triangles[1].p[1](0) = 6;
-	m->triangles[1].p[1](1) = 10;
-	m->triangles[1].p[1](2) = -10;
-	m->triangles[1].p[2](0) = 6;
-	m->triangles[1].p[2](1) = -10;
-	m->triangles[1].p[2](2) = 0;
-	m->triangles[1].color(0) = 1;
-	m->triangles[1].color(1) = 1;
-	m->triangles[1].color(2) = 0;
-	m->triangles[1].color(3) = 1;
-
+	(&(set->m))->triangles[1].p[0](0) = 6;
+	(&(set->m))->triangles[1].p[0](1) = 10;
+	(&(set->m))->triangles[1].p[0](2) = 10;
+	(&(set->m))->triangles[1].p[1](0) = 6;
+	(&(set->m))->triangles[1].p[1](1) = 10;
+	(&(set->m))->triangles[1].p[1](2) = -10;
+	(&(set->m))->triangles[1].p[2](0) = 6;
+	(&(set->m))->triangles[1].p[2](1) = -10;
+	(&(set->m))->triangles[1].p[2](2) = 0;
+	(&(set->m))->triangles[1].color(0) = 1;
+	(&(set->m))->triangles[1].color(1) = 1;
+	(&(set->m))->triangles[1].color(2) = 0;
+	(&(set->m))->triangles[1].color(3) = 1;
 
 
-	(*B)(0) = 1;
-	(*B)(1) = 0;
-	(*B)(2) = 0;
-	(*S)(0) = 1;
-	(*S)(1) = 0;
-	(*S)(2) = 0;
-	(*U)(0) = 0;
-	(*U)(1) = 1;
-	(*U)(2) = 0;
-	*nx = 256;
-	*ny = 192;
-	*w = 10;
-	*r = (double)*nx / (double)*ny;
+
+	(*(&(set->B)))(0) = 1;
+	(*(&(set->B)))(1) = 0;
+	(*(&(set->B)))(2) = 0;
+	(*(&(set->S)))(0) = 1;
+	(*(&(set->S)))(1) = 0;
+	(*(&(set->S)))(2) = 0;
+	(*(&(set->U)))(0) = 0;
+	(*(&(set->U)))(1) = 1;
+	(*(&(set->U)))(2) = 0;
+	*(&(set->nx)) = 256;
+	*(&(set->ny)) = 192;
+	*(&(set->w)) = 10;
+	*(&(set->r)) = (double)*(&(set->nx)) / (double)*(&(set->ny));
 
 }
 
-void init_test2( model *m, vector *B, vector *S, vector *U,
-		scalar *w, scalar *r, int *nx, int *ny ) {
+void init_test2( set *set ) {
 
-	m->lightsources_count = 1;
-	m->lightsources = (lightsource*)malloc(sizeof(lightsource)*m->lightsources_count);
+	(&(set->m))->lightsources_count = 1;
+	(&(set->m))->lightsources = (lightsource*) malloc(
+			sizeof(lightsource) * (&(set->m))->lightsources_count);
 
-	m->lightsources[0].p(X) = 0;
-	m->lightsources[0].p(Y) = 0;
-	m->lightsources[0].p(Z) = 2;
-	m->lightsources[0].color(0) = 1;
-	m->lightsources[0].color(1) = 1;
-	m->lightsources[0].color(2) = 1;
+	(&(set->m))->lightsources[0].p(X) = 0;
+	(&(set->m))->lightsources[0].p(Y) = 0;
+	(&(set->m))->lightsources[0].p(Z) = 2;
+	(&(set->m))->lightsources[0].color(0) = 1;
+	(&(set->m))->lightsources[0].color(1) = 1;
+	(&(set->m))->lightsources[0].color(2) = 1;
 
-	m->triangles_count = 4;
-	m->triangles = (triangle*)malloc(sizeof(triangle)*m->triangles_count);
+	(&(set->m))->triangles_count = 4;
+	(&(set->m))->triangles = (triangle*) malloc(sizeof(triangle) * (&(set->m))->triangles_count);
 
-	m->triangles[0].p[0](0) = 6;
-	m->triangles[0].p[0](1) = -1;
-	m->triangles[0].p[0](2) = -3;
-	m->triangles[0].p[1](0) = 2;
-	m->triangles[0].p[1](1) = 1;
-	m->triangles[0].p[1](2) = -4;
-	m->triangles[0].p[2](0) = 1;
-	m->triangles[0].p[2](1) = -1;
-	m->triangles[0].p[2](2) = -5;
-	m->triangles[0].color(0) = 1;
-	m->triangles[0].color(1) = 0;
-	m->triangles[0].color(2) = 0;
-	m->triangles[0].color(3) = 1;
+	(&(set->m))->triangles[0].p[0](0) = 6;
+	(&(set->m))->triangles[0].p[0](1) = -1;
+	(&(set->m))->triangles[0].p[0](2) = -3;
+	(&(set->m))->triangles[0].p[1](0) = 2;
+	(&(set->m))->triangles[0].p[1](1) = 1;
+	(&(set->m))->triangles[0].p[1](2) = -4;
+	(&(set->m))->triangles[0].p[2](0) = 1;
+	(&(set->m))->triangles[0].p[2](1) = -1;
+	(&(set->m))->triangles[0].p[2](2) = -5;
+	(&(set->m))->triangles[0].color(0) = 1;
+	(&(set->m))->triangles[0].color(1) = 0;
+	(&(set->m))->triangles[0].color(2) = 0;
+	(&(set->m))->triangles[0].color(3) = 1;
 
-	m->triangles[1].p[0](0) = 3;
-	m->triangles[1].p[0](1) = 0;
-	m->triangles[1].p[0](2) = 2;
-	m->triangles[1].p[1](0) = 3;
-	m->triangles[1].p[1](1) = 2;
-	m->triangles[1].p[1](2) = 1;
-	m->triangles[1].p[2](0) = 3;
-	m->triangles[1].p[2](1) = 0;
-	m->triangles[1].p[2](2) = 0;
-	m->triangles[1].color(0) = 0;
-	m->triangles[1].color(1) = 1;
-	m->triangles[1].color(2) = 0;
-	m->triangles[1].color(3) = 1;
+	(&(set->m))->triangles[1].p[0](0) = 3;
+	(&(set->m))->triangles[1].p[0](1) = 0;
+	(&(set->m))->triangles[1].p[0](2) = 2;
+	(&(set->m))->triangles[1].p[1](0) = 3;
+	(&(set->m))->triangles[1].p[1](1) = 2;
+	(&(set->m))->triangles[1].p[1](2) = 1;
+	(&(set->m))->triangles[1].p[2](0) = 3;
+	(&(set->m))->triangles[1].p[2](1) = 0;
+	(&(set->m))->triangles[1].p[2](2) = 0;
+	(&(set->m))->triangles[1].color(0) = 0;
+	(&(set->m))->triangles[1].color(1) = 1;
+	(&(set->m))->triangles[1].color(2) = 0;
+	(&(set->m))->triangles[1].color(3) = 1;
 
-	m->triangles[2].p[0](0) = 3;
-	m->triangles[2].p[0](1) = 4;
-	m->triangles[2].p[0](2) = -3;
-	m->triangles[2].p[1](0) = 3;
-	m->triangles[2].p[1](1) = 6;
-	m->triangles[2].p[1](2) = -4;
-	m->triangles[2].p[2](0) = 3;
-	m->triangles[2].p[2](1) = 4;
-	m->triangles[2].p[2](2) = -5;
-	m->triangles[2].color(0) = 0;
-	m->triangles[2].color(1) = 1;
-	m->triangles[2].color(2) = 1;
-	m->triangles[2].color(3) = 1;
+	(&(set->m))->triangles[2].p[0](0) = 3;
+	(&(set->m))->triangles[2].p[0](1) = 4;
+	(&(set->m))->triangles[2].p[0](2) = -3;
+	(&(set->m))->triangles[2].p[1](0) = 3;
+	(&(set->m))->triangles[2].p[1](1) = 6;
+	(&(set->m))->triangles[2].p[1](2) = -4;
+	(&(set->m))->triangles[2].p[2](0) = 3;
+	(&(set->m))->triangles[2].p[2](1) = 4;
+	(&(set->m))->triangles[2].p[2](2) = -5;
+	(&(set->m))->triangles[2].color(0) = 0;
+	(&(set->m))->triangles[2].color(1) = 1;
+	(&(set->m))->triangles[2].color(2) = 1;
+	(&(set->m))->triangles[2].color(3) = 1;
 
-	m->triangles[3].p[0](0) = 6;
-	m->triangles[3].p[0](1) = 10;
-	m->triangles[3].p[0](2) = 10;
-	m->triangles[3].p[1](0) = 6;
-	m->triangles[3].p[1](1) = 10;
-	m->triangles[3].p[1](2) = -10;
-	m->triangles[3].p[2](0) = 6;
-	m->triangles[3].p[2](1) = -10;
-	m->triangles[3].p[2](2) = 0;
-	m->triangles[3].color(0) = 1;
-	m->triangles[3].color(1) = 1;
-	m->triangles[3].color(2) = 0;
-	m->triangles[3].color(3) = 1;
+	(&(set->m))->triangles[3].p[0](0) = 6;
+	(&(set->m))->triangles[3].p[0](1) = 10;
+	(&(set->m))->triangles[3].p[0](2) = 10;
+	(&(set->m))->triangles[3].p[1](0) = 6;
+	(&(set->m))->triangles[3].p[1](1) = 10;
+	(&(set->m))->triangles[3].p[1](2) = -10;
+	(&(set->m))->triangles[3].p[2](0) = 6;
+	(&(set->m))->triangles[3].p[2](1) = -10;
+	(&(set->m))->triangles[3].p[2](2) = 0;
+	(&(set->m))->triangles[3].color(0) = 1;
+	(&(set->m))->triangles[3].color(1) = 1;
+	(&(set->m))->triangles[3].color(2) = 0;
+	(&(set->m))->triangles[3].color(3) = 1;
 
-
-
-	(*B)(0) = 1;
-	(*B)(1) = 0;
-	(*B)(2) = 0;
-	(*S)(0) = 1;
-	(*S)(1) = 0;
-	(*S)(2) = 0;
-	(*U)(0) = 0;
-	(*U)(1) = 1;
-	(*U)(2) = 0;
-	*nx = 640;
-	*ny = 480;
-	*w = 10;
-	*r = (double)*nx / (double)*ny;
+	(*(&(set->B)))(0) = 1;
+	(*(&(set->B)))(1) = 0;
+	(*(&(set->B)))(2) = 0;
+	(*(&(set->S)))(0) = 1;
+	(*(&(set->S)))(1) = 0;
+	(*(&(set->S)))(2) = 0;
+	(*(&(set->U)))(0) = 0;
+	(*(&(set->U)))(1) = 1;
+	(*(&(set->U)))(2) = 0;
+	*(&(set->nx)) = 640;
+	*(&(set->ny)) = 480;
+	*(&(set->w)) = 10;
+	*(&(set->r)) = (double) *(&(set->nx)) / (double) *(&(set->ny));
 
 }
 
 void test_start() {
 
 	BMP pic1, pic2;
-	model m1, m2;
-	vector B, S, U, dx, dy;
-	scalar w, r;
-	int nx, ny;
+	set set1, set2;
 	int x, y;
 
-	init_test1(&m1, &B, &S, &U, &w, &r, &nx, &ny);
-	saveModel(m1, "testoutput/model1.xml");
-	loadModel(&m2, "testoutput/model1.xml");
-	saveModel(m2, "testoutput/model1_2.xml");
+	init_test1(&set1);
+	saveModel(set1, "testoutput/model1.xml");
+	loadModel(&set2, "testoutput/model1.xml");
+	saveModel(set2, "testoutput/model1_2.xml");
 
-	fillNormals(&m1);
-	fillNormals(&m2);
+	fillNormals(&(set1.m));
+	fillNormals(&(set2.m));
 
 	//printf("t_c %d\n", m.triangles_count);
 	//printf("t0p0 %f %f %f\n", m.triangles[0].p[0](0), m.triangles[0].p[0](1), m.triangles[0].p[0](2));
@@ -187,48 +181,49 @@ void test_start() {
 	//printf("w %f r %f nxy %d %d\n", w, r, nx, ny);
 
 
-	getPxDisplaceVec(B, S, U, w, r, nx, ny, &dx, &dy);
+	getPxDisplaceVec(&set1);
+	getPxDisplaceVec(&set2);
 
 	//printf("dx %f %f %f\n", dx(0), dx(1), dx(2));
 	//printf("dy %f %f %f\n", dy(0), dy(1), dy(2));
 
-	pic1.SetSize(nx, ny);
+	pic1.SetSize(set1.nx, set1.ny);
 	pic1.SetBitDepth(32);
 
-	traceAll(B, S, nx, ny, dx, dy, m1, &pic1);
+	traceAll(set1, &pic1);
 
-	for( y = 0; y < ny; y++ ) {
-		pic1(nx/2,y)->Alpha=255;
-		pic1(nx/2,y)->Blue=255;
-		pic1(nx/2,y)->Green=255;
-		pic1(nx/2,y)->Red=255;
+	for( y = 0; y < set1.ny; y++ ) {
+		pic1(set1.nx/2,y)->Alpha=255;
+		pic1(set1.nx/2,y)->Blue=255;
+		pic1(set1.nx/2,y)->Green=255;
+		pic1(set1.nx/2,y)->Red=255;
 	}
-	for( x = 0; x < nx; x++ ) {
-		pic1(x,ny/2)->Alpha=255;
-		pic1(x,ny/2)->Blue=255;
-		pic1(x,ny/2)->Green=255;
-		pic1(x,ny/2)->Red=255;
+	for( x = 0; x < set1.nx; x++ ) {
+		pic1(x,set1.ny/2)->Alpha=255;
+		pic1(x,set1.ny/2)->Blue=255;
+		pic1(x,set1.ny/2)->Green=255;
+		pic1(x,set1.ny/2)->Red=255;
 	}
 
 	pic1.WriteToFile("testoutput/pic3_1.bmp");
 	printf("Done\n");
 
-	pic2.SetSize(nx, ny);
+	pic2.SetSize(set2.nx, set2.ny);
 	pic2.SetBitDepth(32);
 
-	traceAll(B, S, nx, ny, dx, dy, m2, &pic2);
+	traceAll(set2, &pic2);
 
-	for( y = 0; y < ny; y++ ) {
-		pic2(nx/2,y)->Alpha=255;
-		pic2(nx/2,y)->Blue=255;
-		pic2(nx/2,y)->Green=255;
-		pic2(nx/2,y)->Red=255;
+	for( y = 0; y < set2.ny; y++ ) {
+		pic2(set2.nx/2,y)->Alpha=255;
+		pic2(set2.nx/2,y)->Blue=255;
+		pic2(set2.nx/2,y)->Green=255;
+		pic2(set2.nx/2,y)->Red=255;
 	}
-	for( x = 0; x < nx; x++ ) {
-		pic2(x,ny/2)->Alpha=255;
-		pic2(x,ny/2)->Blue=255;
-		pic2(x,ny/2)->Green=255;
-		pic2(x,ny/2)->Red=255;
+	for( x = 0; x < set2.nx; x++ ) {
+		pic2(x,set2.ny/2)->Alpha=255;
+		pic2(x,set2.ny/2)->Blue=255;
+		pic2(x,set2.ny/2)->Green=255;
+		pic2(x,set2.ny/2)->Red=255;
 	}
 
 	pic2.WriteToFile("testoutput/pic3_2.bmp");

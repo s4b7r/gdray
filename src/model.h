@@ -46,10 +46,8 @@ struct set {
 };
 typedef struct set set;
 
-void loadSet( set *set, char *filename );
-void saveSet( set *set, char *filename );
-void loadModel( model *m, char *filename );
-void saveModel( model m, char *filename );
+void loadModel( set *set, char *filename );
+void saveModel( set set, char *filename );
 void fileToHumanReadableFile( char *filename );
 void fillNormals( model *m );
 

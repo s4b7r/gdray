@@ -9,8 +9,9 @@
 
 #include "head.h"
 
-void saveModel( model m, char *filename ) {
+void saveModel( set set, char *filename ) {
 
+	model m;
 	int i, pi;
 	triangle t;
 	lightsource l;
@@ -23,7 +24,57 @@ void saveModel( model m, char *filename ) {
 	mxml_node_t *e3;
 	FILE *file;
 
+	m = set.m;
+
 	xml = mxmlNewXML("1.0");
+
+
+
+	e0 = mxmlNewElement(xml, "B");
+
+	e1 = mxmlNewElement(e0, "x");
+	mxmlNewReal(e1, (double)set.B(0));
+
+	e1 = mxmlNewElement(e0, "y");
+	mxmlNewReal(e1, (double)set.B(1));
+
+	e1 = mxmlNewElement(e0, "z");
+	mxmlNewReal(e1, (double)set.B(2));
+
+	e0 = mxmlNewElement(xml, "S");
+
+	e1 = mxmlNewElement(e0, "x");
+	mxmlNewReal(e1, (double)set.S(0));
+
+	e1 = mxmlNewElement(e0, "y");
+	mxmlNewReal(e1, (double)set.S(1));
+
+	e1 = mxmlNewElement(e0, "z");
+	mxmlNewReal(e1, (double)set.S(2));
+
+	e0 = mxmlNewElement(xml, "U");
+
+	e1 = mxmlNewElement(e0, "x");
+	mxmlNewReal(e1, (double)set.U(0));
+
+	e1 = mxmlNewElement(e0, "y");
+	mxmlNewReal(e1, (double)set.U(1));
+
+	e1 = mxmlNewElement(e0, "z");
+	mxmlNewReal(e1, (double)set.U(2));
+
+	e0 = mxmlNewElement(xml, "w");
+	mxmlNewReal(e0, set.w);
+
+	e0 = mxmlNewElement(xml, "r");
+	mxmlNewReal(e0, set.r);
+
+	e0 = mxmlNewElement(xml, "nx");
+	mxmlNewReal(e0, set.nx);
+
+	e0 = mxmlNewElement(xml, "ny");
+	mxmlNewReal(e0, set.ny);
+
 
 	e0 = mxmlNewElement(xml, "triangles_count");
 	mxmlNewReal(e0, m.triangles_count);
@@ -156,8 +207,9 @@ void fileToHumanReadableFile( char *filename ) {
 
 }
 
-void loadModel( model *m, char *filename ) {
+void loadModel( set *set, char *filename ) {
 
+	model *m;
 	FILE *file;
 	mxml_node_t *xml;
 	mxml_node_t *e0;
@@ -167,9 +219,48 @@ void loadModel( model *m, char *filename ) {
 	int i, c;
 	char s[3];
 
+	m = &(set->m);
+
 	file = fopen(filename, "r");
 	xml = mxmlLoadFile(NULL, file, MXML_REAL_CALLBACK);
 	fclose(file);
+
+	e0 = mxmlFindElement(xml, xml, "B", NULL, NULL, MXML_DESCEND_FIRST);
+	e1 = mxmlFindElement(e0, e0, "x", NULL, NULL, MXML_DESCEND_FIRST);
+	set->B(0) = mxmlGetReal(e1);
+	e1 = mxmlFindElement(e0, e0, "y", NULL, NULL, MXML_DESCEND_FIRST);
+	set->B(1) = mxmlGetReal(e1);
+	e1 = mxmlFindElement(e0, e0, "z", NULL, NULL, MXML_DESCEND_FIRST);
+	set->B(2) = mxmlGetReal(e1);
+	e0 = mxmlFindElement(xml, xml, "S", NULL, NULL, MXML_DESCEND_FIRST);
+	e1 = mxmlFindElement(e0, e0, "x", NULL, NULL, MXML_DESCEND_FIRST);
+	set->S(0) = mxmlGetReal(e1);
+	e1 = mxmlFindElement(e0, e0, "y", NULL, NULL, MXML_DESCEND_FIRST);
+	set->S(1) = mxmlGetReal(e1);
+	e1 = mxmlFindElement(e0, e0, "z", NULL, NULL, MXML_DESCEND_FIRST);
+	set->S(2) = mxmlGetReal(e1);
+	e0 = mxmlFindElement(xml, xml, "U", NULL, NULL, MXML_DESCEND_FIRST);
+	e1 = mxmlFindElement(e0, e0, "x", NULL, NULL, MXML_DESCEND_FIRST);
+	set->U(0) = mxmlGetReal(e1);
+	e1 = mxmlFindElement(e0, e0, "y", NULL, NULL, MXML_DESCEND_FIRST);
+	set->U(1) = mxmlGetReal(e1);
+	e1 = mxmlFindElement(e0, e0, "z", NULL, NULL, MXML_DESCEND_FIRST);
+	set->U(2) = mxmlGetReal(e1);
+	e0 = mxmlFindElement(xml, xml, "w", NULL, NULL, MXML_DESCEND_FIRST);
+	set->w = mxmlGetReal(e0);
+	e0 = mxmlFindElement(xml, xml, "r", NULL, NULL, MXML_DESCEND_FIRST);
+	set->r = mxmlGetReal(e0);
+	e0 = mxmlFindElement(xml, xml, "nx", NULL, NULL, MXML_DESCEND_FIRST);
+	set->nx = mxmlGetReal(e0);
+	e0 = mxmlFindElement(xml, xml, "ny", NULL, NULL, MXML_DESCEND_FIRST);
+	set->ny = mxmlGetReal(e0);
+
+
+
+
+
+
+
 
 	//printf("dbg cp 1\n");
 
@@ -290,29 +381,3 @@ void fillNormals( model *m ) {
 
 }
 
-void loadSet( set *set, char *filename ) {
-
-	// todo implement loadSet()
-
-}
-
-void saveSet( set *set, char *filename ) {
-
-	/*struct set {
-
-		BMP pic;
-		model m;
-		Vector3d B, S, U, dx, dy;
-		double w, r;
-		int nx, ny;
-
-	};*/
-
-	FILE *file;
-	mxml_node_t *xml;
-
-	xml = mxmlNewXML("1.0");
-
-
-
-}
