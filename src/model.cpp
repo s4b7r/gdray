@@ -15,7 +15,7 @@ void saveModel( set set, char *filename ) {
 	int i, pi;
 	triangle t;
 	lightsource l;
-	vector p;
+	Vector3d p;
 	char s[20];
 	mxml_node_t *xml;
 	mxml_node_t *e0;

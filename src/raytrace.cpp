@@ -13,19 +13,19 @@ void getPxDisplaceVec(
 		set *set ) {
 
 
-	vector S_d = set->S.normalized();
+	Vector3d S_d = set->S.normalized();
 	// S_d = direction of S
 
-	vector dy_d = set->U.normalized();
+	Vector3d dy_d = set->U.normalized();
 	// dy_d = direction of dy
-	vector dx_d = S_d.cross(dy_d);
+	Vector3d dx_d = S_d.cross(dy_d);
 	// dx_d = direction of dx
 
-	scalar h = set->w / set->r;
+	double h = set->w / set->r;
 	// h = height of viewport in model-length-units
-	scalar dx_l = set->w / set->nx;
+	double dx_l = set->w / set->nx;
 	// dx_l = length of dx
-	scalar dy_l = h / set->ny;
+	double dy_l = h / set->ny;
 	// dy_l = length of dy
 
 	set->dx = dx_d * dx_l;
@@ -43,16 +43,16 @@ ray getRayThroughPx(
 	// r = ray from B through pixel
 
 	r.point = set.B;
-	r.direction = set.S+set.dx*(x-(scalar)set.nx/2+0.5)+set.dy*(y-(scalar)set.ny/2+0.5);
+	r.direction = set.S+set.dx*(x-(double)set.nx/2+0.5)+set.dy*(y-(double)set.ny/2+0.5);
 
 	return r;
 
 }
 
-scalar intersectRayTriangle(
+double intersectRayTriangle(
 		model m,
 		ray r, triangle t,
-		color *c ,
+		Vector4d *c ,
 		int tIndex) {
 
 	Matrix3d A;
@@ -65,7 +65,7 @@ scalar intersectRayTriangle(
 		return 0;
 	}
 
-	vector I = r.point + r.direction * x(0);
+	Vector3d I = r.point + r.direction * x(0);
 
 	//*c = t.color;
 	*c = getColor((Vector3d)I, r, t.color, t.normal, m, tIndex);
@@ -73,12 +73,12 @@ scalar intersectRayTriangle(
 
 }
 
-color intersectRayWorld(
+Vector4d intersectRayWorld(
 		ray r, model m ) {
 
 	int i;
-	scalar d, dmin = -1;
-	color c, cmin;
+	double d, dmin = -1;
+	Vector4d c, cmin;
 	/*
 	 * index, distance (camera - intersection) and color
 	 * of currently checked triangle and the nearest, intersected one
@@ -97,12 +97,12 @@ color intersectRayWorld(
 
 }
 
-color tracePx(
+Vector4d tracePx(
 		set set,
 		int x, int y ) {
 
 	ray r;
-	color color;
+	Vector4d color;
 
 	r = getRayThroughPx(set, x, y);
 
@@ -122,7 +122,7 @@ void traceAll(
 
 	int x, y;
 	// loop counters for pixel's x and y coordinates
-	color c;
+	Vector4d c;
 
 	for( y = 0; y < set.ny; y++ ) {
 		for( x = 0; x < set.nx; x++ ) {

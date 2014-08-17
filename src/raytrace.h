@@ -10,10 +10,6 @@
 
 #include <Eigen/Dense>
 
-typedef Vector4d color;
-typedef Vector3d vector;
-typedef double scalar;
-
 /*
  * getPxDpVec()
  *
@@ -26,13 +22,13 @@ void getPxDisplaceVec(
  *
  * B = world origin -> camera point
  * S = camera point -> viewport midpoint
- * U = camera's "UP"-vector
+ * U = camera's "UP"-Vector3d
  * w = width of viewport in model-length-units
  * r = aspect ratio = w / h
  * nx = number of pixels in x direction
  * ny = number of pixels in y direction
- * dx = displacement vector of one pixel in x direction
- * dy = displacement vector of one pixel in y direction
+ * dx = displacement Vector3d of one pixel in x direction
+ * dy = displacement Vector3d of one pixel in y direction
  *
  */
 
@@ -42,17 +38,17 @@ void getPxDisplaceVec(
  * Calculate ray from camera point through given screen pixel.
  */
 ray getRayThroughPx(
-		vector B, vector S,
+		Vector3d B, Vector3d S,
 		int nx, int ny,
-		vector dx, vector dy,
+		Vector3d dx, Vector3d dy,
 		int x, int y );
 /*
  * B = world origin -> camera point
  * S = camera point -> viewport midpoint
  * nx = number of pixels in x direction
  * ny = number of pixels in y direction
- * dx = displacement vector of one pixel in x direction
- * dy = displacement vector of one pixel in y direction
+ * dx = displacement Vector3d of one pixel in x direction
+ * dy = displacement Vector3d of one pixel in y direction
  * x = pixel's x coordinate
  * y = pixel's y coordinate
  *
@@ -63,10 +59,10 @@ ray getRayThroughPx(
  *
  * Calculate intersection between ray and given triangle.
  */
-scalar intersectRayTriangle(
+double intersectRayTriangle(
 		model m,
 		ray r, triangle t,
-		color *c ,
+		Vector4d *c ,
 		int tIndex);
 /*
  * todo comments
@@ -77,7 +73,7 @@ scalar intersectRayTriangle(
  *
  * Calculate intersections between ray and all world-objects.
  */
-color intersectRayWorld(
+Vector4d intersectRayWorld(
 		ray r, model m );
 /*
  *
@@ -91,7 +87,7 @@ color intersectRayWorld(
  *
  * Perform raytracing for one pixel.
  */
-color tracePx(
+Vector4d tracePx(
 		set set,
 		int x, int y );
 /*
