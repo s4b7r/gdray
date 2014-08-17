@@ -21,6 +21,7 @@ struct lightsource {
 
 	Vector4d color;
 	Vector3d p;
+
 };
 typedef struct lightsource lightsource;
 
@@ -42,6 +43,20 @@ struct set {
 	Vector3d B, S, U, dx, dy;
 	double w, r;
 	int nx, ny;
+
+	/*
+	 *
+	 * B = world origin -> camera point
+	 * S = camera point -> viewport midpoint
+	 * U = camera's "UP"-Vector3d
+	 * w = width of viewport in model-length-units
+	 * r = aspect ratio = w / h
+	 * nx = number of pixels in x direction
+	 * ny = number of pixels in y direction
+	 * dx = displacement Vector3d of one pixel in x direction
+	 * dy = displacement Vector3d of one pixel in y direction
+	 *
+	 */
 
 };
 typedef struct set set;

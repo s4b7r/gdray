@@ -9,11 +9,8 @@
 #define TESTING_H_
 
 void init_test1( set *set );
-
 void init_test2( set *set );
 
 void test_start();
-
-
 
 #endif /* TESTING_H_ */

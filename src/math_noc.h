@@ -8,6 +8,7 @@
 #ifndef MATH_NOC_H_
 #define MATH_NOC_H_
 
+// Use mathematic knowledge to understand struct ray
 struct ray {
 
 	Vector3d point;
