@@ -51,9 +51,11 @@ ray getRayThroughPx(
 
 double intersectRayTriangle(
 		model m,
-		ray r, triangle t,
+		ray r,
 		Vector4d *c ,
 		int tIndex) {
+
+	triangle t = m.triangles[tIndex];
 
 	Matrix3d A;
 	A.col(0) = r.direction * -1;
@@ -86,7 +88,7 @@ Vector4d intersectRayWorld(
 
 	for( i = 0; i < m.triangles_count; i++ ) {
 
-		if( (d=intersectRayTriangle(m, r, m.triangles[i], &c, i))>1 && (d < dmin || dmin==-1) ) {
+		if( (d=intersectRayTriangle(m, r, &c, i))>1 && (d < dmin || dmin==-1) ) {
 			dmin = d;
 			cmin = c;
 		}

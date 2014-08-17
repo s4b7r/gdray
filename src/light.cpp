@@ -42,8 +42,12 @@ double getXYAngle(Vector3d A, Vector3d B){
 	return acos(a.dot(b));
 }
 
-Vector4d getColor(Vector3d schnittpunkt, ray strahl, Vector4d farbe, Vector3d normale, model modell, int tIndex){
+//Vector4d getColor(Vector3d schnittpunkt, ray strahl, Vector4d farbe, Vector3d normale, model modell, int tIndex){
+Vector4d getColor(Vector3d schnittpunkt, ray strahl, model modell, int tIndex){
 	Vector4d ret(0,0,0,1);
+
+	Vector4d farbe = modell.triangles[tIndex].color;
+	Vector3d normale = modell.triangles[tIndex].normal;
 
 	// Diffuses Licht unabhängig von Beobachter
 	for(int i=0;i<modell.lightsources_count;i++){

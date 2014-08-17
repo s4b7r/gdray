@@ -61,7 +61,7 @@ ray getRayThroughPx(
  */
 double intersectRayTriangle(
 		model m,
-		ray r, triangle t,
+		ray r,
 		Vector4d *c ,
 		int tIndex);
 /*
