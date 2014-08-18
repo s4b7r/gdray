@@ -11,6 +11,8 @@
 void init_test1( set *set );
 void init_test2( set *set );
 
-void test_start();
+void run_test1( int test_no );
+void run_test3();
+void test_start( int test_no );
 
 #endif /* TESTING_H_ */

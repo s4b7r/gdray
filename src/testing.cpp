@@ -167,13 +167,23 @@ void init_test2( set *set ) {
 
 }
 
-void test_start() {
+void run_test1( int test_no ) {
 
 	BMP pic1, pic2;
 	set set1, set2;
 	int x, y;
 
-	init_test1(&set1);
+	switch (test_no) {
+	case 1:
+		init_test1(&set1);
+		break;
+	case 2:
+		init_test2(&set1);
+		break;
+	default:
+		break;
+	}
+
 	saveModel(set1, "testoutput/model1.xml");
 	loadModel(&set2, "testoutput/model1.xml");
 	saveModel(set2, "testoutput/model1_2.xml");
@@ -239,5 +249,45 @@ void test_start() {
 
 	pic2.WriteToFile("testoutput/pic3_2.bmp");
 	printf("Done\n");
+
+}
+
+void run_test3() {
+
+	BMP pic1;
+	set set1;
+	int i;
+	char s[1024];
+
+	init_test1(&set1);
+
+	fillNormals(&(set1.m));
+	getPxDisplaceVec(&set1);
+	pic1.SetSize(set1.nx, set1.ny);
+	pic1.SetBitDepth(32);
+
+	for( i = -6; i <= 6; i=i+2 ) {
+		set1.m.lightsources[0].p(Z) = i;
+		traceAll(set1, &pic1);
+		sprintf(s, "testoutput/lighingtest_%d_.bmp", i);
+		pic1.WriteToFile(s);
+		printf("Done %d\n", i);
+	}
+
+}
+
+void test_start( int test_no ) {
+
+	switch (test_no) {
+	case 1:
+	case 2:
+		run_test1(test_no);
+		break;
+	case 3:
+		run_test3();
+		break;
+	default:
+		break;
+	}
 
 }
