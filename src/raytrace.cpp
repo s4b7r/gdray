@@ -67,7 +67,7 @@ double intersectRayTriangle( model m, ray r, Vector4d *c, int tIndex) {
 	Vector3d I = r.point + r.direction * x(0);
 
 	//*c = t.color;
-	*c = getColor(I, r, t.color, t.normal, m, tIndex);
+	*c = getColor(I, r, m, tIndex);
 
 	return x(0);
 
