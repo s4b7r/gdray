@@ -269,7 +269,7 @@ void run_test3() {
 	for( i = -6; i <= 6; i=i+2 ) {
 		set1.m.lightsources[0].p(Z) = i;
 		traceAll(set1, &pic1);
-		sprintf(s, "testoutput/lighingtest_%d_.bmp", i);
+		sprintf(s, "testoutput/lightingtest_%d_.bmp", i);
 		pic1.WriteToFile(s);
 		printf("Done %d\n", i);
 	}
