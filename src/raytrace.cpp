@@ -46,9 +46,9 @@ ray getRayThroughPx( set set, int x, int y ) {
 
 }
 
-double intersectRayTriangle( model m, ray r, Vector4d *c, int tIndex) {
+double intersectRayTriangle( set set, ray r, Vector4d *c, int tIndex) {
 
-	triangle t = m.triangles[tIndex];
+	triangle t = set.m.triangles[tIndex];
 
 	// Build and solve linear equationsystem
 	// to calculate the intersection
@@ -67,13 +67,13 @@ double intersectRayTriangle( model m, ray r, Vector4d *c, int tIndex) {
 	Vector3d I = r.point + r.direction * x(0);
 
 	//*c = t.color;
-	*c = getColor(I, r, m, tIndex);
+	*c = getColor(I, r, set.m, tIndex, set.conf);
 
 	return x(0);
 
 }
 
-Vector4d intersectRayWorld( ray r, model m ) {
+Vector4d intersectRayWorld( ray r, set set ) {
 
 	int i;
 	double d, dmin = -1;
@@ -84,9 +84,9 @@ Vector4d intersectRayWorld( ray r, model m ) {
 	 */
 
 	// Check all triangles for intersection and choose the nearest one
-	for( i = 0; i < m.triangles_count; i++ ) {
+	for( i = 0; i < set.m.triangles_count; i++ ) {
 
-		if( (d=intersectRayTriangle(m, r, &c, i))>1 && (d < dmin || dmin==-1) ) {
+		if( (d=intersectRayTriangle(set, r, &c, i))>1 && (d < dmin || dmin==-1) ) {
 			dmin = d;
 			cmin = c;
 		}
@@ -103,7 +103,7 @@ Vector4d tracePx( set set, int x, int y ) {
 	Vector4d color;
 
 	r = getRayThroughPx(set, x, y);
-	color = intersectRayWorld(r, set.m);
+	color = intersectRayWorld(r, set);
 
 	return color;
 

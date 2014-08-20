@@ -20,6 +20,8 @@
 
 void init_test1( set *set ) {
 
+	initConfig(&(set->conf));
+
 	(&(set->m))->lightsources_count = 1;
 	(&(set->m))->lightsources = (lightsource*)malloc(sizeof(lightsource)*(&(set->m))->lightsources_count);
 
@@ -80,6 +82,8 @@ void init_test1( set *set ) {
 }
 
 void init_test2( set *set ) {
+
+	initConfig(&(set->conf));
 
 	(&(set->m))->lightsources_count = 1;
 	(&(set->m))->lightsources = (lightsource*) malloc(
@@ -169,6 +173,8 @@ void init_test2( set *set ) {
 
 void init_test4( set *set ) {
 
+	initConfig(&(set->conf));
+
 	(&(set->m))->lightsources_count = 2;
 	(&(set->m))->lightsources = (lightsource*)malloc(sizeof(lightsource)*(&(set->m))->lightsources_count);
 
@@ -228,8 +234,8 @@ void init_test4( set *set ) {
 	(*(&(set->U)))(0) = 0;
 	(*(&(set->U)))(1) = 1;
 	(*(&(set->U)))(2) = 0;
-	*(&(set->nx)) = 256;
-	*(&(set->ny)) = 192;
+	*(&(set->nx)) = 640;
+	*(&(set->ny)) = 480;
 	*(&(set->w)) = 10;
 	*(&(set->r)) = (double)*(&(set->nx)) / (double)*(&(set->ny));
 
@@ -366,6 +372,33 @@ void run_test4() {
 
 }
 
+void run_test5() {
+
+	BMP pic1;
+	set set1;
+	char s[1024];
+
+	init_test4(&set1);
+
+	fillNormals(&(set1.m));
+	getPxDisplaceVec(&set1);
+	pic1.SetSize(set1.nx, set1.ny);
+	pic1.SetBitDepth(32);
+
+
+	traceAll(set1, &pic1);
+	sprintf(s, "testoutput/lightingtest_t5_1_.bmp");
+	pic1.WriteToFile(s);
+	printf("Done 1\n");
+
+	set1.conf.LIGHTING_RND_NORMAL = 1;
+	traceAll(set1, &pic1);
+	sprintf(s, "testoutput/lightingtest_t5_2_.bmp");
+	pic1.WriteToFile(s);
+	printf("Done 2\n");
+
+}
+
 void test_start( int test_no ) {
 
 	switch (test_no) {
@@ -378,6 +411,9 @@ void test_start( int test_no ) {
 		break;
 	case 4:
 		run_test4();
+		break;
+	case 5:
+		run_test5();
 		break;
 	default:
 		break;
