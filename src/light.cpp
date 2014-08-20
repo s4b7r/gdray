@@ -43,7 +43,7 @@ double getXYAngle(Vector3d A, Vector3d B){
 }
 
 //Vector4d getColor(Vector3d schnittpunkt, ray strahl, Vector4d farbe, Vector3d normale, model modell, int tIndex){
-Vector4d getColor(Vector3d schnittpunkt, ray strahl, model modell, int tIndex){
+Vector4d getColor(Vector3d schnittpunkt, ray strahl, model modell, int tIndex, config conf){
 	Vector4d ret(0,0,0,1);
 
 	Vector4d farbe = modell.triangles[tIndex].color;
@@ -85,6 +85,12 @@ Vector4d getColor(Vector3d schnittpunkt, ray strahl, model modell, int tIndex){
 		}
 
 		if(!proxybool){
+			if(conf.LIGHTING_RND_NORMAL){
+				normale(0)+=(double)rand()/RAND_MAX*0.1;
+				normale(1)+=(double)rand()/RAND_MAX*0.1;
+				normale(2)+=(double)rand()/RAND_MAX*0.1;
+				normale.normalize();
+			}
 			long double cosAlpha = normale.dot(P.normalized());
 
 			if(acos(cosAlpha) < 1.570796327){

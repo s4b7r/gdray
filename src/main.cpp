@@ -50,12 +50,12 @@ int main(int argc, char **argv) {
 		printf("GD_Ray --help\n");
 		printf("Show this help.\n");
 		printf("\n");
-	} else if( argc == 3 ) {
+	} else if( argc == 3 && strcmp(argv[1], "--run-test") ) {
 		// Run the standard procedure
 		standard(argv[1], argv[2]);
-	} else if( (argc == 2 && !strcmp(argv[1], "--run-test")) || DEV_TEST ) {
+	} else if( (argc == 3 && !strcmp(argv[1], "--run-test")) || DEV_TEST ) {
 		// Run developer's test
-		test_start();
+		test_start(atoi(argv[2]));
 	} else {
 		// You forgot all the beautiful arguments!
 		printf("General use: GD_Ray MODELFILE OUTPUTFILE\n");

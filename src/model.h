@@ -36,8 +36,16 @@ struct model {
 };
 typedef struct model model;
 
+struct config {
+
+	char LIGHTING_RND_NORMAL;
+
+};
+typedef struct config config;
+
 struct set {
 
+	config conf; // todo something to think about: does config fit into set?
 	BMP pic;
 	model m;
 	Vector3d B, S, U, dx, dy;
@@ -65,5 +73,6 @@ void loadModel( set *set, char *filename );
 void saveModel( set set, char *filename );
 void fileToHumanReadableFile( char *filename );
 void fillNormals( model *m );
+void initConfig( config *conf );
 
 #endif /* MODEL_H_ */

@@ -35,7 +35,7 @@ ray getRayThroughPx( set set, int x, int y );
  *
  * Calculate intersection between ray and given triangle.
  */
-double intersectRayTriangle( model m, ray r, Vector4d *c, int tIndex);
+double intersectRayTriangle( set set, ray r, Vector4d *c, int tIndex);
 /*
  * c = pointer to color vector which will hold the pixels color after return
  * tIndex = the triangles index in struct model m
@@ -46,7 +46,7 @@ double intersectRayTriangle( model m, ray r, Vector4d *c, int tIndex);
  *
  * Calculate intersections between ray and all world-objects.
  */
-Vector4d intersectRayWorld( ray r, model m );
+Vector4d intersectRayWorld( ray r, set set );
 
 
 /*

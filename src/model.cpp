@@ -318,3 +318,8 @@ void fillNormals( model *m ) {
 
 }
 
+void initConfig( config *conf ) {
+
+	conf->LIGHTING_RND_NORMAL = 0;
+
+}
