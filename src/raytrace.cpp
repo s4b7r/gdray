@@ -122,10 +122,10 @@ void traceAll( set set, BMP *pic ) {
 			//printf("Progress: %d\n", 100*(x+y*set.nx)/(set.ny * set.nx));
 			// todo maybe there is some nicer way to display progress
 			c = tracePx(set, x, y);
-			(*pic)(x, y)->Red = c(0)*255;
-			(*pic)(x, y)->Green = c(1)*255;
-			(*pic)(x, y)->Blue = c(2)*255;
-			(*pic)(x, y)->Alpha = c(3)*255;
+			(*pic)(x, set.ny-y-1)->Red = c(0)*255;
+			(*pic)(x, set.ny-y-1)->Green = c(1)*255;
+			(*pic)(x, set.ny-y-1)->Blue = c(2)*255;
+			(*pic)(x, set.ny-y-1)->Alpha = c(3)*255;
 
 		}
 	}
