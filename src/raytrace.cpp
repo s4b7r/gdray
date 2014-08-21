@@ -66,8 +66,22 @@ double intersectRayTriangle( set set, ray r, Vector4d *c, int tIndex) {
 	// Calculate point of intersection
 	Vector3d I = r.point + r.direction * x(0);
 
-	//*c = t.color;
-	*c = getColor(I, r, set.m, tIndex, set.conf);
+	// If checking ray for reflection, it may intersect with the reflecting triangle.
+	// That would not be nice!
+	if( I == r.point ) {
+		return 0;
+	}
+
+	if( set.conf.reflection && t.reflection > 0.0 ) {
+		ray reflected;
+		reflected.point = I;
+		reflected.direction = -2 * t.normal.dot(r.direction.normalized()) * t.normal + r.direction.normalized();
+		*c = intersectRayWorld(reflected, set);
+	} else if( set.conf.lighting ){
+		*c = getColor(I, r, set.m, tIndex, set.conf);
+	} else {
+		*c = t.color;
+	}
 
 	return x(0);
 
@@ -122,10 +136,10 @@ void traceAll( set set, BMP *pic ) {
 			//printf("Progress: %d\n", 100*(x+y*set.nx)/(set.ny * set.nx));
 			// todo maybe there is some nicer way to display progress
 			c = tracePx(set, x, y);
-			(*pic)(x, y)->Red = c(0)*255;
-			(*pic)(x, y)->Green = c(1)*255;
-			(*pic)(x, y)->Blue = c(2)*255;
-			(*pic)(x, y)->Alpha = c(3)*255;
+			(*pic)(x, set.ny-y-1)->Red = c(0)*255;
+			(*pic)(x, set.ny-y-1)->Green = c(1)*255;
+			(*pic)(x, set.ny-y-1)->Blue = c(2)*255;
+			(*pic)(x, set.ny-y-1)->Alpha = c(3)*255;
 
 		}
 	}

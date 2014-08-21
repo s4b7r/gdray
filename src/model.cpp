@@ -320,6 +320,8 @@ void fillNormals( model *m ) {
 
 void initConfig( config *conf ) {
 
-	conf->LIGHTING_RND_NORMAL = 0;
+	conf->lighting = 1;
+	conf->lighting_rnd_normal = 0;
+	conf->reflection = 0;
 
 }

@@ -13,6 +13,7 @@ struct triangle {
 	Vector4d color;
 	Vector3d normal;
 	Vector3d p[3];
+	double reflection;
 
 };
 typedef struct triangle triangle;
@@ -38,7 +39,9 @@ typedef struct model model;
 
 struct config {
 
-	char LIGHTING_RND_NORMAL;
+	char lighting;
+	char lighting_rnd_normal;
+	char reflection;
 
 };
 typedef struct config config;
