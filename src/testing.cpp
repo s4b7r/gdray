@@ -87,8 +87,7 @@ void init_test2( set *set ) {
 	initConfig(&(set->conf));
 
 	(&(set->m))->lightsources_count = 1;
-	(&(set->m))->lightsources = (lightsource*) malloc(
-			sizeof(lightsource) * (&(set->m))->lightsources_count);
+	(&(set->m))->lightsources = (lightsource*) malloc(sizeof(lightsource) * (&(set->m))->lightsources_count);
 
 	(&(set->m))->lightsources[0].p(X) = 0;
 	(&(set->m))->lightsources[0].p(Y) = 0;
@@ -528,6 +527,12 @@ void run_test6() {
 	sprintf(s, "testoutput/lightingtest_t6_3_.bmp");
 	pic1.WriteToFile(s);
 	printf("Done 3\n");
+
+	set1.conf.lighting = 0;
+	traceAll(set1, &pic1);
+	sprintf(s, "testoutput/lightingtest_t6_4_.bmp");
+	pic1.WriteToFile(s);
+	printf("Done 4\n");
 
 }
 
