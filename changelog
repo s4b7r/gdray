@@ -5,3 +5,7 @@ Basic functionality implemented and slightly tested
 v0.1.1
 2014-08-18
 Fix major, compile-blocking, bug
+
+v0.1.2
+2014-08-21
+Fix reversed y direction in file output
