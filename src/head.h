@@ -5,6 +5,8 @@
  *      Author: sieb
  */
 
+// todo think about some interactive features
+
 #ifndef HEAD_H_
 #define HEAD_H_
 

@@ -66,8 +66,22 @@ double intersectRayTriangle( set set, ray r, Vector4d *c, int tIndex) {
 	// Calculate point of intersection
 	Vector3d I = r.point + r.direction * x(0);
 
-	//*c = t.color;
-	*c = getColor(I, r, set.m, tIndex, set.conf);
+	// If checking ray for reflection, it may intersect with the reflecting triangle.
+	// That would not be nice!
+	if( I == r.point ) {
+		return 0;
+	}
+
+	if( set.conf.reflection && t.reflection > 0.0 ) {
+		ray reflected;
+		reflected.point = I;
+		reflected.direction = -2 * t.normal.dot(r.direction.normalized()) * t.normal + r.direction.normalized();
+		*c = intersectRayWorld(reflected, set);
+	} else if( set.conf.lighting ){
+		*c = getColor(I, r, set.m, tIndex, set.conf);
+	} else {
+		*c = t.color;
+	}
 
 	return x(0);
 

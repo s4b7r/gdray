@@ -25,7 +25,7 @@ bool getIfInsideTriangle(Vector3d p[3], Vector3d testPunkt){
 
 	for(double x = 0.0; x <= 1.0; x += step_ab){
 		for(double y = 0.0; y <= 1.0; y += step_ac){
-			if(x+y <= 1.0 && (p[0]+x*AB+y*AC-testPunkt).norm() <= maxTriggerDist){
+			if(x+y <= 1.0 && ((Vector3d)(p[0]+x*AB+y*AC-testPunkt)).norm() <= maxTriggerDist){
 				//cout << "A\n" << p[0] << endl << "testPunkt\n" << testPunkt << endl << "AB\n" << AB << endl << "AC\n" << AC << endl;
 				return true;
 			}
@@ -74,7 +74,7 @@ Vector4d getColor(Vector3d schnittpunkt, ray strahl, model modell, int tIndex, c
 
 					for(double x = 0.0; x <= 1.0; x += step_ab){
 						for(double y = 0.0; y <= 1.0; y += step_ac){
-							if(x+y <= 1.0 && (A+x*AB+y*AC-intersectionPoint).norm() <= maxTriggerDist){
+							if(x+y <= 1.0 && ((Vector3d)(A+x*AB+y*AC-intersectionPoint)).norm() <= maxTriggerDist){
 								//cout << "A\n" << p[0] << endl << "testPunkt\n" << testPunkt << endl << "AB\n" << AB << endl << "AC\n" << AC << endl;
 								proxybool = true;
 							}
@@ -85,7 +85,7 @@ Vector4d getColor(Vector3d schnittpunkt, ray strahl, model modell, int tIndex, c
 		}
 
 		if(!proxybool){
-			if(conf.LIGHTING_RND_NORMAL){
+			if(conf.lighting_rnd_normal){
 				normale(0)+=(double)rand()/RAND_MAX*0.1;
 				normale(1)+=(double)rand()/RAND_MAX*0.1;
 				normale(2)+=(double)rand()/RAND_MAX*0.1;
@@ -93,9 +93,10 @@ Vector4d getColor(Vector3d schnittpunkt, ray strahl, model modell, int tIndex, c
 			}
 			long double cosAlpha = normale.dot(P.normalized());
 
-			if(acos(cosAlpha) < 1.570796327){
+			// todo I don't know what this condition is doing, but it's not good for some models!
+			//if(acos(cosAlpha) < 1.570796327){
 				ret += cosAlpha * modell.lightsources[i].color;
-			}
+			//}
 
 			// Abstrahlung vom Objekt abhängig von der Farbe des Objekts
 			for(int j=0;j<4;j++){
