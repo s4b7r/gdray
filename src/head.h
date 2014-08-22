@@ -31,7 +31,7 @@ using Eigen::Matrix3d;
 
 // EasyBMP library
 // Simple BMP-file creation
-#include "EasyBMP/EasyBMP.h"
+#include "ext-libs/EasyBMP/EasyBMP.h"
 
 // GD_Ray's own source
 #include "math_noc.h"
