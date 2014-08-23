@@ -1,4 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
+<conf>
+<lighting>
+1.000000</lighting>
+<lighting_rnd_normal>
+0.000000</lighting_rnd_normal>
+<no_progress>
+1.000000</no_progress>
+<reflection>
+0.000000</reflection>
+</conf>
 <B>
 <x>
 1.000000</x>

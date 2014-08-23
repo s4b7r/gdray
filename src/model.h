@@ -39,6 +39,7 @@ typedef struct model model;
 
 struct config {
 
+	char no_progress;
 	char lighting;
 	char lighting_rnd_normal;
 	char reflection;

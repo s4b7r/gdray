@@ -31,6 +31,17 @@ void saveModel( set set, char *filename ) {
 
 	xml = mxmlNewXML("1.0");
 
+
+	e0 = mxmlNewElement(xml, "conf");
+	e1 = mxmlNewElement(e0, "lighting");
+	mxmlNewReal(e1, (double)set.conf.lighting);
+	e1 = mxmlNewElement(e0, "lighting_rnd_normal");
+	mxmlNewReal(e1, (double)set.conf.lighting_rnd_normal);
+	e1 = mxmlNewElement(e0, "no_progress");
+	mxmlNewReal(e1, (double)set.conf.no_progress);
+	e1 = mxmlNewElement(e0, "reflection");
+	mxmlNewReal(e1, (double)set.conf.reflection);
+
 	e0 = mxmlNewElement(xml, "B");
 	e1 = mxmlNewElement(e0, "x");
 	mxmlNewReal(e1, (double)set.B(0));
@@ -201,6 +212,17 @@ void loadModel( set *set, char *filename ) {
 	xml = mxmlLoadFile(NULL, file, MXML_REAL_CALLBACK);
 	fclose(file);
 
+
+	e0 = mxmlFindElement(xml, xml, "conf", NULL, NULL, MXML_DESCEND_FIRST);
+	e1 = mxmlFindElement(e0, e0, "lighting", NULL, NULL, MXML_DESCEND_FIRST);
+	set->conf.lighting = mxmlGetReal(e1);
+	e1 = mxmlFindElement(e0, e0, "lighting_rnd_normal", NULL, NULL, MXML_DESCEND_FIRST);
+	set->conf.lighting_rnd_normal = mxmlGetReal(e1);
+	e1 = mxmlFindElement(e0, e0, "no_progress", NULL, NULL, MXML_DESCEND_FIRST);
+	set->conf.no_progress = mxmlGetReal(e1);
+	e1 = mxmlFindElement(e0, e0, "reflection", NULL, NULL, MXML_DESCEND_FIRST);
+	set->conf.reflection = mxmlGetReal(e1);
+
 	e0 = mxmlFindElement(xml, xml, "B", NULL, NULL, MXML_DESCEND_FIRST);
 	e1 = mxmlFindElement(e0, e0, "x", NULL, NULL, MXML_DESCEND_FIRST);
 	set->B(0) = mxmlGetReal(e1);
@@ -320,6 +342,7 @@ void fillNormals( model *m ) {
 
 void initConfig( config *conf ) {
 
+	conf->no_progress = 0;
 	conf->lighting = 1;
 	conf->lighting_rnd_normal = 0;
 	conf->reflection = 0;
