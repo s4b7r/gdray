@@ -1,4 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
+<conf>
+<lighting>
+1.000000</lighting>
+<lighting_rnd_normal>
+0.000000</lighting_rnd_normal>
+<no_progress>
+1.000000</no_progress>
+<reflection>
+0.000000</reflection>
+</conf>
 <B>
 <x>
 1.000000</x>
@@ -47,7 +57,7 @@
 </color>
 <normal>
 <x>
-0.000000</x>
+-1.000000</x>
 <y>
 0.000000</y>
 <z>
@@ -77,6 +87,8 @@
 <z>
 0.000000</z>
 </p2>
+<reflection>
+0.000000</reflection>
 </triangle>
 <triangle>
 <color>
@@ -91,7 +103,7 @@
 </color>
 <normal>
 <x>
-0.000000</x>
+-1.000000</x>
 <y>
 0.000000</y>
 <z>
@@ -121,6 +133,8 @@
 <z>
 0.000000</z>
 </p2>
+<reflection>
+0.000000</reflection>
 </triangle>
 </triangles>
 <lightsources_count>

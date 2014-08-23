@@ -94,9 +94,9 @@ Vector4d getColor(Vector3d schnittpunkt, ray strahl, model modell, int tIndex, c
 			long double cosAlpha = normale.dot(P.normalized());
 
 			// todo I don't know what this condition is doing, but it's not good for some models!
-			//if(acos(cosAlpha) < 1.570796327){
+			if(acos(cosAlpha) < 1.570796327){
 				ret += cosAlpha * modell.lightsources[i].color;
-			//}
+			}
 
 			// Abstrahlung vom Objekt abhängig von der Farbe des Objekts
 			for(int j=0;j<4;j++){

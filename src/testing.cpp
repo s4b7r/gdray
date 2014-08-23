@@ -17,7 +17,7 @@
  *
  */
 
-
+/*
 void init_test1( set *set ) {
 
 	initConfig(&(set->conf));
@@ -54,7 +54,7 @@ void init_test1( set *set ) {
 	(&(set->m))->triangles[1].p[0](1) = 10;
 	(&(set->m))->triangles[1].p[0](2) = 10;
 	(&(set->m))->triangles[1].p[1](0) = 6;
-	(&(set->m))->triangles[1].p[1](1) = 10;
+	(&(set->m))->triangles[1].p[1](1) = 5;
 	(&(set->m))->triangles[1].p[1](2) = -10;
 	(&(set->m))->triangles[1].p[2](0) = 6;
 	(&(set->m))->triangles[1].p[2](1) = -10;
@@ -87,8 +87,7 @@ void init_test2( set *set ) {
 	initConfig(&(set->conf));
 
 	(&(set->m))->lightsources_count = 1;
-	(&(set->m))->lightsources = (lightsource*) malloc(
-			sizeof(lightsource) * (&(set->m))->lightsources_count);
+	(&(set->m))->lightsources = (lightsource*) malloc(sizeof(lightsource) * (&(set->m))->lightsources_count);
 
 	(&(set->m))->lightsources[0].p(X) = 0;
 	(&(set->m))->lightsources[0].p(Y) = 0;
@@ -269,7 +268,7 @@ void init_test6( set *set ) {
 	(&(set->m))->lightsources[1].color(0) = 1;
 	(&(set->m))->lightsources[1].color(1) = 1;
 	(&(set->m))->lightsources[1].color(2) = 1;
-	 */
+	//
 	(&(set->m))->triangles_count = 3;
 	(&(set->m))->triangles = (triangle*)malloc(sizeof(triangle)*(&(set->m))->triangles_count);
 
@@ -334,6 +333,101 @@ void init_test6( set *set ) {
 	*(&(set->r)) = (double)*(&(set->nx)) / (double)*(&(set->ny));
 
 }
+
+void init_test7( set *set ) {
+
+	initConfig(&(set->conf));
+	set->conf.reflection = 1;
+	set->conf.no_progress = 1;
+
+	(&(set->m))->lightsources_count = 1;
+	(&(set->m))->lightsources = (lightsource*)malloc(sizeof(lightsource)*(&(set->m))->lightsources_count);
+
+	(&(set->m))->lightsources[0].p(X) = 0;
+	(&(set->m))->lightsources[0].p(Y) = 0;
+	(&(set->m))->lightsources[0].p(Z) = 0;
+	(&(set->m))->lightsources[0].color(0) = 1;
+	(&(set->m))->lightsources[0].color(1) = 1;
+	(&(set->m))->lightsources[0].color(2) = 1;
+	/*
+	(&(set->m))->lightsources[1].p(X) = 0;
+	(&(set->m))->lightsources[1].p(Y) = 0;
+	(&(set->m))->lightsources[1].p(Z) = -2;
+	(&(set->m))->lightsources[1].color(0) = 1;
+	(&(set->m))->lightsources[1].color(1) = 1;
+	(&(set->m))->lightsources[1].color(2) = 1;
+	//
+	(&(set->m))->triangles_count = 2;
+	(&(set->m))->triangles = (triangle*)malloc(sizeof(triangle)*(&(set->m))->triangles_count);
+
+	(&(set->m))->triangles[0].p[0](0) = 9;
+	(&(set->m))->triangles[0].p[0](1) = -1;
+	(&(set->m))->triangles[0].p[0](2) = 0;
+	(&(set->m))->triangles[0].p[1](0) = 9;
+	(&(set->m))->triangles[0].p[1](1) = 1;
+	(&(set->m))->triangles[0].p[1](2) = 0;
+	(&(set->m))->triangles[0].p[2](0) = 7;
+	(&(set->m))->triangles[0].p[2](1) = 0;
+	(&(set->m))->triangles[0].p[2](2) = -2;
+	(&(set->m))->triangles[0].color(0) = 1;
+	(&(set->m))->triangles[0].color(1) = 0;
+	(&(set->m))->triangles[0].color(2) = 0;
+	(&(set->m))->triangles[0].color(3) = 1;
+	set->m.triangles[0].reflection = 1;
+
+	(&(set->m))->triangles[1].p[0](0) = 9;
+	(&(set->m))->triangles[1].p[0](1) = -1;
+	(&(set->m))->triangles[1].p[0](2) = 0;
+	(&(set->m))->triangles[1].p[1](0) = 7;
+	(&(set->m))->triangles[1].p[1](1) = 0;
+	(&(set->m))->triangles[1].p[1](2) = 2;
+	(&(set->m))->triangles[1].p[2](0) = 9;
+	(&(set->m))->triangles[1].p[2](1) = 1;
+	(&(set->m))->triangles[1].p[2](2) = 0;
+	(&(set->m))->triangles[1].color(0) = 0;
+	(&(set->m))->triangles[1].color(1) = 1;
+	(&(set->m))->triangles[1].color(2) = 0;
+	(&(set->m))->triangles[1].color(3) = 1;
+	set->m.triangles[1].reflection = 0;
+
+	/*(&(set->m))->triangles[2].p[0](0) = 6;
+	(&(set->m))->triangles[2].p[0](1) = 0.3;
+	(&(set->m))->triangles[2].p[0](2) = 0;
+	(&(set->m))->triangles[2].p[1](0) = 4;
+	(&(set->m))->triangles[2].p[1](1) = 0.8;
+	(&(set->m))->triangles[2].p[1](2) = 1.5;
+	(&(set->m))->triangles[2].p[2](0) = 4;
+	(&(set->m))->triangles[2].p[2](1) = 0.8;
+	(&(set->m))->triangles[2].p[2](2) = -1.5;
+	(&(set->m))->triangles[2].color(0) = 0;
+	(&(set->m))->triangles[2].color(1) = 1;
+	(&(set->m))->triangles[2].color(2) = 0;
+	(&(set->m))->triangles[2].color(3) = 1;
+	set->m.triangles[2].reflection = 0;
+	//
+
+	(*(&(set->B)))(0) = 1;
+	(*(&(set->B)))(1) = 5;
+	(*(&(set->B)))(2) = 0;
+	(*(&(set->S)))(0) = 1;
+	(*(&(set->S)))(1) = -1;
+	(*(&(set->S)))(2) = 0;
+	(*(&(set->U)))(0) = 0;
+	(*(&(set->U)))(1) = 1;
+	(*(&(set->U)))(2) = 0;
+	*(&(set->nx)) = 192;
+	*(&(set->ny)) = 256;
+	*(&(set->w)) = 1;
+	*(&(set->r)) = (double)*(&(set->nx)) / (double)*(&(set->ny));
+
+}
+*/
+
+void init_test1( set *set ) { loadModel(set, "testoutput/test1.xml"); }
+void init_test2( set *set ) { loadModel(set, "testoutput/test2.xml"); }
+void init_test4( set *set ) { loadModel(set, "testoutput/test4.xml"); }
+void init_test6( set *set ) { loadModel(set, "testoutput/test6.xml"); }
+void init_test7( set *set ) { loadModel(set, "testoutput/test7.xml"); }
 
 void run_test1( int test_no ) {
 
@@ -504,7 +598,7 @@ void run_test6() {
 	set1.ny = 192;
 
 	fillNormals(&(set1.m));
-	set1.m.triangles[2].normal *= -1;
+	//set1.m.triangles[2].normal *= -1;
 	getPxDisplaceVec(&set1);
 	pic1.SetSize(set1.nx, set1.ny);
 	pic1.SetBitDepth(32);
@@ -529,9 +623,42 @@ void run_test6() {
 	pic1.WriteToFile(s);
 	printf("Done 3\n");
 
+	set1.conf.lighting = 0;
+	traceAll(set1, &pic1);
+	sprintf(s, "testoutput/lightingtest_t6_4_.bmp");
+	pic1.WriteToFile(s);
+	printf("Done 4\n");
+
+}
+
+void run_test7() {
+
+	BMP pic1;
+	set set1;
+	char s[1024];
+
+	init_test7(&set1);
+	set1.nx = 256;
+	set1.ny = 192;
+
+	fillNormals(&(set1.m));
+	getPxDisplaceVec(&set1);
+	pic1.SetSize(set1.nx, set1.ny);
+	pic1.SetBitDepth(32);
+
+
+	set1.conf.lighting = 1;
+	set1.conf.reflection = 1;
+	traceAll(set1, &pic1);
+	sprintf(s, "testoutput/lightingtest_t7_1_.bmp");
+	pic1.WriteToFile(s);
+	printf("Done 1\n");
+
 }
 
 void test_start( int test_no ) {
+
+	allTestsToFiles();
 
 	switch (test_no) {
 	case 1:
@@ -550,8 +677,37 @@ void test_start( int test_no ) {
 	case 6:
 		run_test6();
 		break;
+	case 7:
+		run_test7();
+		break;
 	default:
 		break;
 	}
+
+}
+
+void allTestsToFiles() {
+
+	set set;
+
+	init_test1(&set);
+	fillNormals(&(set.m));
+	saveModel(set, "testoutput/test1.xml");
+
+	init_test2(&set);
+	fillNormals(&(set.m));
+	saveModel(set, "testoutput/test2.xml");
+
+	init_test4(&set);
+	fillNormals(&(set.m));
+	saveModel(set, "testoutput/test4.xml");
+
+	init_test6(&set);
+	fillNormals(&(set.m));
+	saveModel(set, "testoutput/test6.xml");
+
+	init_test7(&set);
+	fillNormals(&(set.m));
+	saveModel(set, "testoutput/test7.xml");
 
 }

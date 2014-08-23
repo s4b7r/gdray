@@ -129,11 +129,15 @@ void traceAll( set set, BMP *pic ) {
 	// loop counters for pixel's x and y coordinates
 	Vector4d c;
 
+	//printf("reflection: %d\n", set.conf.reflection);
+
 	// Trace for all pixels
 	for( y = 0; y < set.ny; y++ ) {
 		for( x = 0; x < set.nx; x++ ) {
 
-			//printf("Progress: %d\n", 100*(x+y*set.nx)/(set.ny * set.nx));
+			if( !set.conf.no_progress ) {
+				printf("Progress: %d\033[12D", 100*(x+y*set.nx)/(set.ny * set.nx));
+			}
 			// todo maybe there is some nicer way to display progress
 			c = tracePx(set, x, y);
 			(*pic)(x, set.ny-y-1)->Red = c(0)*255;

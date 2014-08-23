@@ -44,8 +44,8 @@ int main(int argc, char **argv) {
 		printf("Standard usage. Will load modelfile given by MODELFILE and save\n");
 		printf("raytracing result into OUTPUTFILE.\n");
 		printf("\n");
-		printf("GD_Ray --run-test\n");
-		printf("Run the developer's test procedure.\n");
+		printf("GD_Ray --run-test N\n");
+		printf("Run the developer's test procedure no. N.\n");
 		printf("\n");
 		printf("GD_Ray --help\n");
 		printf("Show this help.\n");
