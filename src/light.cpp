@@ -12,71 +12,81 @@ using std::max;
 using std::cout;
 using std::endl;
 
-bool getIfInsideTriangle(Vector3d p[3], Vector3d testPunkt){
-	double AB_Betrag = (p[1]-p[0]).norm();
-	Vector3d AB = p[1]-p[0];
-	double AC_Betrag = (p[2]-p[0]).norm();
-	Vector3d AC = p[2]-p[0];
-
-	double step_ab = STEP/AB_Betrag;
-	double step_ac = STEP/AC_Betrag;
-
-	double maxTriggerDist = STEP*0.866025403;
-
-	for(double x = 0.0; x <= 1.0; x += step_ab){
-		for(double y = 0.0; y <= 1.0; y += step_ac){
-			if(x+y <= 1.0 && ((Vector3d)(p[0]+x*AB+y*AC-testPunkt)).norm() <= maxTriggerDist){
-				//cout << "A\n" << p[0] << endl << "testPunkt\n" << testPunkt << endl << "AB\n" << AB << endl << "AC\n" << AC << endl;
-				return true;
-			}
-		}
-	}
-
-	return false;
-}
-
-double getXYAngle(Vector3d A, Vector3d B){
-	Vector2d a,b;
-	a << A(0), A(1);
-	b << B(0), B(1);
-	return acos(a.dot(b));
-}
-
-//Vector4d getColor(Vector3d schnittpunkt, ray strahl, Vector4d farbe, Vector3d normale, model modell, int tIndex){
 Vector4d getColor(Vector3d schnittpunkt, ray strahl, model modell, int tIndex, config conf){
+
+	// Returning color vector.
 	Vector4d ret(0,0,0,1);
 
-	Vector4d farbe = modell.triangles[tIndex].color;
-	Vector3d normale = modell.triangles[tIndex].normal;
+	// Color of the object at 'schnittpunkt' (triangle 't').
+	Vector4d farbe_t = modell.triangles[tIndex].color;
 
-	// Diffuses Licht unabhängig von Beobachter
-	for(int i=0;i<modell.lightsources_count;i++){
-		bool proxybool = false;
+	// Normal vector of the object at 'schnittpunkt' (triangle 't').
+	Vector3d normal_t = modell.triangles[tIndex].normal;
 
-		Vector3d P = modell.lightsources[i].p - schnittpunkt; //Vektor vom Schnittpunkt zur Lichtquelle
+	// Is true if the object at 'schnittpunkt' (triangle 't') is not seen by the current light source due to another object being in the line of sight.
+	bool covered = false;
 
-		for(int k=0;k<modell.triangles_count;k++){
-			if(tIndex != k){
+	// Vector from 'schnittpunkt' to the light source.
+	Vector3d P;
 
-				Vector3d A = modell.triangles[k].p[0];
-				Vector3d AC = modell.triangles[k].p[2]-modell.triangles[k].p[0];
-				Vector3d AB = modell.triangles[k].p[1]-modell.triangles[k].p[0];
+	// Describing the triangle 'k' with three vectors: A, B and C. AB is the vector from A to B etc..
+	Vector3d A_k, AB_k, AC_k;
 
-				Vector3d norm = modell.triangles[k].normal;
+	// Normal vector of triangle 'k'.
+	Vector3d normal_k;
 
-				Vector3d intersectionPoint = schnittpunkt + P*(((A.dot(norm)-schnittpunkt.dot(norm)))/P.dot(norm));	//kann null werden
-				if(P.dot(intersectionPoint-schnittpunkt)>0){
+	// Point where the ray from the light source 'i' intersects the plane of triangle 'k'.
+	Vector3d intersectionPoint;
 
-					double step_ab = STEP/AB.norm();
-					double step_ac = STEP/AC.norm();
+	/* If 'intersectionPoint' is clear a collision detection will proof whether the distance between 'intersectionPoint' and a point of the triangle 'k'
+	 * is smaller than 'maxTriggerDist'. This is the largest possible distance an intersection point can have to a sampled point on the triangle 'k' and be
+	 * inside of the triangle 'k'.
+	 *
+	 * The equation for a point on a triangle in 3D is:
+	 *
+	 *		point = A + n*AB + m*AC
+	 *
+	 * Where A, AB and AC are described as above and 'n' and 'm' reach from zero to one. The triangle 'k' is sampled in percentage steps:
+	 * 'step_ab_k' and 'step_ac_k'. They depend on the length of AB or AC and the global resolution value STEP.
+	 */
+	double step_ab_k, step_ac_k, maxTriggerDist = STEP*0.707106781;
 
-					double maxTriggerDist = STEP*0.866025403;
+	// This value is the cosine of the angle between P and 'normal_t' and defines the intensity of the diffuse reflected light.
+	long double cosAlpha;
 
-					for(double x = 0.0; x <= 1.0; x += step_ab){
-						for(double y = 0.0; y <= 1.0; y += step_ac){
-							if(x+y <= 1.0 && ((Vector3d)(A+x*AB+y*AC-intersectionPoint)).norm() <= maxTriggerDist){
+	// Here start diffuse light effects independent of viewer position.
+	for(int i=0;i<modell.lightsources_count;i++){	// for every light source (index i).
+
+		// Initializing variables for the light source 'i'.
+		covered = false;
+		P = modell.lightsources[i].p - schnittpunkt;
+
+		for(int k=0;k<modell.triangles_count;k++){	//for every triangle (index k) ...
+			if(tIndex != k){	// ... except the one where 'schnittpunkt' is.
+
+				// Initializing variables for the triangle 'k'.
+				A_k = modell.triangles[k].p[0];
+				AC_k = modell.triangles[k].p[2]-modell.triangles[k].p[0];
+				AB_k = modell.triangles[k].p[1]-modell.triangles[k].p[0];
+				normal_k = modell.triangles[k].normal;
+				step_ab_k = STEP/AB_k.norm();
+				step_ac_k = STEP/AC_k.norm();
+
+				// Compute 'intersectionPoint'. Mathematics are described in doc.
+				intersectionPoint = schnittpunkt + P*(((A_k.dot(normal_k)-schnittpunkt.dot(normal_k)))/P.dot(normal_k));
+
+				if(P.dot(intersectionPoint-schnittpunkt)>0){	/* if 'intersectionPoint' is between triangle 't' and light source 'i'.
+																 * Otherwise objects would incorrectly cover other objects from light.
+																 * TODO: look for better condition -> objects will cover themselves
+																 * even if light source is between them.
+																 */
+
+					// Sample the triangle 'k' as described above
+					for(double x = 0.0; x <= 1.0; x += step_ab_k){
+						for(double y = 0.0; y <= 1.0; y += step_ac_k){
+							if(x+y <= 1.0 && ((Vector3d)(A_k+x*AB_k+y*AC_k-intersectionPoint)).norm() <= maxTriggerDist){
 								//cout << "A\n" << p[0] << endl << "testPunkt\n" << testPunkt << endl << "AB\n" << AB << endl << "AC\n" << AC << endl;
-								proxybool = true;
+								covered = true;
 							}
 						}
 					}
@@ -84,26 +94,33 @@ Vector4d getColor(Vector3d schnittpunkt, ray strahl, model modell, int tIndex, c
 			}
 		}
 
-		if(!proxybool){
+		if(!covered){
+
 			if(conf.lighting_rnd_normal){
-				normale(0)+=(double)rand()/RAND_MAX*0.1;
-				normale(1)+=(double)rand()/RAND_MAX*0.1;
-				normale(2)+=(double)rand()/RAND_MAX*0.1;
-				normale.normalize();
+				normal_t(0)+=(double)rand()/RAND_MAX*0.1;
+				normal_t(1)+=(double)rand()/RAND_MAX*0.1;
+				normal_t(2)+=(double)rand()/RAND_MAX*0.1;
+				normal_t.normalize();
 			}
-			long double cosAlpha = normale.dot(P.normalized());
 
-			// todo I don't know what this condition is doing, but it's not good for some models!
-			if(acos(cosAlpha) < 1.570796327){
+			cosAlpha = normal_t.dot(P.normalized());
+
+			// If the angle between P and 'normal_t' is smaller than 90 degrees. TODO: it's not good for some models!
+			//if(acos(cosAlpha) < 1.570796327){
+
+				// Compute returning color dependently on 'cosAlpha' (angle of light irradiation).
 				ret += cosAlpha * modell.lightsources[i].color;
-			}
 
-			// Abstrahlung vom Objekt abhängig von der Farbe des Objekts
+			//}
+
+			// Compute returning color dependently on color of triangle 't'.
 			for(int j=0;j<4;j++){
-				ret(j) *= farbe(j);
+				ret(j) *= farbe_t(j);
 			}
 		}
 	}
+
+	// Normalize to usable color range (zero to one)
 	ret /= modell.lightsources_count;
 
 	return ret;
