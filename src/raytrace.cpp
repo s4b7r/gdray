@@ -99,8 +99,8 @@ Vector4d intersectRayWorld( ray r, set set ) {
 
 	// Check all triangles for intersection and choose the nearest one
 	for( i = 0; i < set.m.triangles_count; i++ ) {
-
-		if( (d=intersectRayTriangle(set, r, &c, i))>1 && (d < dmin || dmin==-1) ) {
+		d=intersectRayTriangle(set, r, &c, i);
+		if( d > 1 && (d < dmin || dmin==-1) ) {
 			dmin = d;
 			cmin = c;
 		}

@@ -658,7 +658,7 @@ void run_test7() {
 
 void test_start( int test_no ) {
 
-	allTestsToFiles();
+	//allTestsToFiles();
 
 	switch (test_no) {
 	case 1:
