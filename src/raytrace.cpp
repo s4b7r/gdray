@@ -46,9 +46,11 @@ ray getRayThroughPx( set set, int x, int y ) {
 
 }
 
-double intersectRayTriangle( set set, ray r, Vector4d *c, int tIndex) {
+double intersectRayTriangle( set set, ray r, Vector4d *c, int tIndex, double min_d) {
 
+	int i;
 	triangle t = set.m.triangles[tIndex];
+	Vector4d mirrorC;
 
 	// Build and solve linear equationsystem
 	// to calculate the intersection
@@ -59,24 +61,22 @@ double intersectRayTriangle( set set, ray r, Vector4d *c, int tIndex) {
 	Vector3d x = A.colPivHouseholderQr().solve(r.point - t.p[2]);
 
 	// Check for the equation's conditions
-	if( x(0) < 1 || x(1) < 0 || x(1) > 1 || x(2) < 0 || x(2) > 1 || x(1)+x(2) > 1 ) {
+	if( x(0) <= min_d || x(1) < 0 || x(1) > 1 || x(2) < 0 || x(2) > 1 || x(1)+x(2) > 1 ) {
 		return 0;
 	}
 
 	// Calculate point of intersection
 	Vector3d I = r.point + r.direction * x(0);
 
-	// If checking ray for reflection, it may intersect with the reflecting triangle.
-	// That would not be nice!
-	if( I == r.point ) {
-		return 0;
-	}
-
 	if( set.conf.reflection && t.reflection > 0.0 ) {
 		ray reflected;
 		reflected.point = I;
 		reflected.direction = -2 * t.normal.dot(r.direction.normalized()) * t.normal + r.direction.normalized();
-		*c = intersectRayWorld(reflected, set);
+		*c = intersectRayWorld(reflected, set, 0.001);
+		mirrorC = getColor(I, r, set.m, tIndex, set.conf);
+		for(i=0;i<4;i++){
+			(*c)(i) = (*c)(i)*t.reflection + mirrorC(i)*(1-t.reflection);
+		}
 	} else if( set.conf.lighting ){
 		*c = getColor(I, r, set.m, tIndex, set.conf);
 	} else {
@@ -87,7 +87,7 @@ double intersectRayTriangle( set set, ray r, Vector4d *c, int tIndex) {
 
 }
 
-Vector4d intersectRayWorld( ray r, set set ) {
+Vector4d intersectRayWorld( ray r, set set, double min_d ) {
 
 	int i;
 	double d, dmin = -1;
@@ -97,10 +97,15 @@ Vector4d intersectRayWorld( ray r, set set ) {
 	 * of currently checked triangle and the nearest, intersected one
 	 */
 
+	cmin(0) = 0;
+	cmin(1) = 0;
+	cmin(2) = 0;
+	cmin(3) = 0;
+
 	// Check all triangles for intersection and choose the nearest one
 	for( i = 0; i < set.m.triangles_count; i++ ) {
-		d=intersectRayTriangle(set, r, &c, i);
-		if( d > 1 && (d < dmin || dmin==-1) ) {
+		d=intersectRayTriangle(set, r, &c, i, min_d);
+		if( d > min_d && (d < dmin || dmin==-1) ) {
 			dmin = d;
 			cmin = c;
 		}
@@ -117,7 +122,7 @@ Vector4d tracePx( set set, int x, int y ) {
 	Vector4d color;
 
 	r = getRayThroughPx(set, x, y);
-	color = intersectRayWorld(r, set);
+	color = intersectRayWorld(r, set, 1.0);
 
 	return color;
 
