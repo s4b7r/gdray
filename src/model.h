@@ -49,7 +49,7 @@ typedef struct config config;
 
 struct set {
 
-	config conf; // todo something to think about: does config fit into set?
+	config conf;
 	BMP pic;
 	model m;
 	Vector3d B, S, U, dx, dy;
