@@ -57,7 +57,7 @@
 </color>
 <normal>
 <x>
-0.000000</x>
+-1.000000</x>
 <y>
 0.000000</y>
 <z>
@@ -87,6 +87,8 @@
 <z>
 0.000000</z>
 </p2>
+<reflection>
+0.000000</reflection>
 </triangle>
 <triangle>
 <color>
@@ -101,11 +103,11 @@
 </color>
 <normal>
 <x>
-0.000000</x>
+-1.000000</x>
 <y>
 0.000000</y>
 <z>
-0.000000</z>
+-0.000000</z>
 </normal>
 <p0>
 <x>
@@ -131,6 +133,8 @@
 <z>
 0.000000</z>
 </p2>
+<reflection>
+0.000000</reflection>
 </triangle>
 </triangles>
 <lightsources_count>

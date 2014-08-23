@@ -129,6 +129,8 @@ void traceAll( set set, BMP *pic ) {
 	// loop counters for pixel's x and y coordinates
 	Vector4d c;
 
+	//printf("reflection: %d\n", set.conf.reflection);
+
 	// Trace for all pixels
 	for( y = 0; y < set.ny; y++ ) {
 		for( x = 0; x < set.nx; x++ ) {

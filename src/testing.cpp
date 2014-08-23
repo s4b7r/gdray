@@ -268,7 +268,7 @@ void init_test6( set *set ) {
 	(&(set->m))->lightsources[1].color(0) = 1;
 	(&(set->m))->lightsources[1].color(1) = 1;
 	(&(set->m))->lightsources[1].color(2) = 1;
-
+	//
 	(&(set->m))->triangles_count = 3;
 	(&(set->m))->triangles = (triangle*)malloc(sizeof(triangle)*(&(set->m))->triangles_count);
 
@@ -356,7 +356,7 @@ void init_test7( set *set ) {
 	(&(set->m))->lightsources[1].color(0) = 1;
 	(&(set->m))->lightsources[1].color(1) = 1;
 	(&(set->m))->lightsources[1].color(2) = 1;
-
+	//
 	(&(set->m))->triangles_count = 2;
 	(&(set->m))->triangles = (triangle*)malloc(sizeof(triangle)*(&(set->m))->triangles_count);
 
@@ -404,7 +404,7 @@ void init_test7( set *set ) {
 	(&(set->m))->triangles[2].color(2) = 0;
 	(&(set->m))->triangles[2].color(3) = 1;
 	set->m.triangles[2].reflection = 0;
-
+	//
 
 	(*(&(set->B)))(0) = 1;
 	(*(&(set->B)))(1) = 5;
@@ -658,6 +658,8 @@ void run_test7() {
 
 void test_start( int test_no ) {
 
+	allTestsToFiles();
+
 	switch (test_no) {
 	case 1:
 	case 2:
@@ -689,18 +691,23 @@ void allTestsToFiles() {
 	set set;
 
 	init_test1(&set);
+	fillNormals(&(set.m));
 	saveModel(set, "testoutput/test1.xml");
 
 	init_test2(&set);
+	fillNormals(&(set.m));
 	saveModel(set, "testoutput/test2.xml");
 
 	init_test4(&set);
+	fillNormals(&(set.m));
 	saveModel(set, "testoutput/test4.xml");
 
 	init_test6(&set);
+	fillNormals(&(set.m));
 	saveModel(set, "testoutput/test6.xml");
 
 	init_test7(&set);
+	fillNormals(&(set.m));
 	saveModel(set, "testoutput/test7.xml");
 
 }

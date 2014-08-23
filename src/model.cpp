@@ -119,6 +119,9 @@ void saveModel( set set, char *filename ) {
 			mxmlNewReal(e3, (double)t.p[pi](2));
 		}
 
+		e2 = mxmlNewElement(e1, "reflection");
+		mxmlNewReal(e2, t.reflection);
+
 	}
 
 	e0 = mxmlNewElement(xml, "lightsources_count");
@@ -293,6 +296,9 @@ void loadModel( set *set, char *filename ) {
 			e3 = mxmlFindElement(e2, e2, "z", NULL, NULL, MXML_DESCEND_FIRST);
 			m->triangles[c].p[i](2) = mxmlGetReal(e3);
 		}
+
+		e2 = mxmlFindElement(e1, e1, "reflection", NULL, NULL, MXML_DESCEND_FIRST);
+		m->triangles[c].reflection = mxmlGetReal(e2);
 
 		c++;
 		e1 = mxmlWalkNext(e1, e0, MXML_NO_DESCEND);
