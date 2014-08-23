@@ -20,6 +20,7 @@ void run_test4();
 void run_test5();
 void run_test6();
 void run_test7();
+void run_test8();
 void test_start( int test_no );
 
 void allTestsToFiles();
