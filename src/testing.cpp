@@ -75,10 +75,10 @@ void init_test1( set *set ) {
 	(*(&(set->U)))(0) = 0;
 	(*(&(set->U)))(1) = 1;
 	(*(&(set->U)))(2) = 0;
-	*(&(set->nx)) = 256;
-	*(&(set->ny)) = 192;
-	*(&(set->w)) = 10;
-	*(&(set->r)) = (double)*(&(set->nx)) / (double)*(&(set->ny));
+ *(&(set->nx)) = 256;
+ *(&(set->ny)) = 192;
+ *(&(set->w)) = 10;
+ *(&(set->r)) = (double)*(&(set->nx)) / (double)*(&(set->ny));
 
 }
 
@@ -168,10 +168,10 @@ void init_test2( set *set ) {
 	(*(&(set->U)))(0) = 0;
 	(*(&(set->U)))(1) = 1;
 	(*(&(set->U)))(2) = 0;
-	*(&(set->nx)) = 640;
-	*(&(set->ny)) = 480;
-	*(&(set->w)) = 10;
-	*(&(set->r)) = (double) *(&(set->nx)) / (double) *(&(set->ny));
+ *(&(set->nx)) = 640;
+ *(&(set->ny)) = 480;
+ *(&(set->w)) = 10;
+ *(&(set->r)) = (double) *(&(set->nx)) / (double) *(&(set->ny));
 
 }
 
@@ -240,10 +240,10 @@ void init_test4( set *set ) {
 	(*(&(set->U)))(0) = 0;
 	(*(&(set->U)))(1) = 1;
 	(*(&(set->U)))(2) = 0;
-	*(&(set->nx)) = 640;
-	*(&(set->ny)) = 480;
-	*(&(set->w)) = 10;
-	*(&(set->r)) = (double)*(&(set->nx)) / (double)*(&(set->ny));
+ *(&(set->nx)) = 640;
+ *(&(set->ny)) = 480;
+ *(&(set->w)) = 10;
+ *(&(set->r)) = (double)*(&(set->nx)) / (double)*(&(set->ny));
 
 }
 
@@ -327,10 +327,10 @@ void init_test6( set *set ) {
 	(*(&(set->U)))(0) = 0;
 	(*(&(set->U)))(1) = 1;
 	(*(&(set->U)))(2) = 0;
-	*(&(set->nx)) = 640;
-	*(&(set->ny)) = 480;
-	*(&(set->w)) = 1;
-	*(&(set->r)) = (double)*(&(set->nx)) / (double)*(&(set->ny));
+ *(&(set->nx)) = 640;
+ *(&(set->ny)) = 480;
+ *(&(set->w)) = 1;
+ *(&(set->r)) = (double)*(&(set->nx)) / (double)*(&(set->ny));
 
 }
 
@@ -415,13 +415,13 @@ void init_test7( set *set ) {
 	(*(&(set->U)))(0) = 0;
 	(*(&(set->U)))(1) = 1;
 	(*(&(set->U)))(2) = 0;
-	*(&(set->nx)) = 192;
-	*(&(set->ny)) = 256;
-	*(&(set->w)) = 1;
-	*(&(set->r)) = (double)*(&(set->nx)) / (double)*(&(set->ny));
+ *(&(set->nx)) = 192;
+ *(&(set->ny)) = 256;
+ *(&(set->w)) = 1;
+ *(&(set->r)) = (double)*(&(set->nx)) / (double)*(&(set->ny));
 
 }
-*/
+ */
 
 void init_test1( set *set ) { loadModel(set, "testoutput/test1.xml"); }
 void init_test2( set *set ) { loadModel(set, "testoutput/test2.xml"); }
@@ -656,58 +656,95 @@ void run_test7() {
 
 }
 
-void test_start( int test_no ) {
+void run_test8() {
 
-	allTestsToFiles();
+	BMP pic1;
+	set set1;
+	char s[1024];
+	int i;
 
-	switch (test_no) {
-	case 1:
-	case 2:
-		run_test1(test_no);
-		break;
-	case 3:
-		run_test3();
-		break;
-	case 4:
-		run_test4();
-		break;
-	case 5:
-		run_test5();
-		break;
-	case 6:
-		run_test6();
-		break;
-	case 7:
-		run_test7();
-		break;
-	default:
-		break;
+	init_test7(&set1);
+	set1.nx = 256;
+	set1.ny = 192;
+
+	fillNormals(&(set1.m));
+	getPxDisplaceVec(&set1);
+	pic1.SetSize(set1.nx, set1.ny);
+	pic1.SetBitDepth(32);
+
+
+	set1.conf.lighting = 1;
+	set1.conf.reflection = 0;
+
+
+	for( i = -5; i <= 5; i++ ) {
+		set1.B(1) = i;
+		set1.S(1) = -i*0.1;
+		traceAll(set1, &pic1);
+		sprintf(s, "testoutput/lightingtest_t8_%d_.bmp", i+5);
+		pic1.WriteToFile(s);
+		printf("Done %d\n", i);
 	}
 
-}
 
-void allTestsToFiles() {
 
-	set set;
+	}
 
-	init_test1(&set);
-	fillNormals(&(set.m));
-	saveModel(set, "testoutput/test1.xml");
+	void test_start( int test_no ) {
 
-	init_test2(&set);
-	fillNormals(&(set.m));
-	saveModel(set, "testoutput/test2.xml");
+		//allTestsToFiles();
 
-	init_test4(&set);
-	fillNormals(&(set.m));
-	saveModel(set, "testoutput/test4.xml");
+		switch (test_no) {
+		case 1:
+		case 2:
+			run_test1(test_no);
+			break;
+		case 3:
+			run_test3();
+			break;
+		case 4:
+			run_test4();
+			break;
+		case 5:
+			run_test5();
+			break;
+		case 6:
+			run_test6();
+			break;
+		case 7:
+			run_test7();
+			break;
+		case 8:
+			run_test8();
+			break;
+		default:
+			break;
+		}
 
-	init_test6(&set);
-	fillNormals(&(set.m));
-	saveModel(set, "testoutput/test6.xml");
+	}
 
-	init_test7(&set);
-	fillNormals(&(set.m));
-	saveModel(set, "testoutput/test7.xml");
+	void allTestsToFiles() {
 
-}
+		set set;
+
+		init_test1(&set);
+		fillNormals(&(set.m));
+		saveModel(set, "testoutput/test1.xml");
+
+		init_test2(&set);
+		fillNormals(&(set.m));
+		saveModel(set, "testoutput/test2.xml");
+
+		init_test4(&set);
+		fillNormals(&(set.m));
+		saveModel(set, "testoutput/test4.xml");
+
+		init_test6(&set);
+		fillNormals(&(set.m));
+		saveModel(set, "testoutput/test6.xml");
+
+		init_test7(&set);
+		fillNormals(&(set.m));
+		saveModel(set, "testoutput/test7.xml");
+
+	}
