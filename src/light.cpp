@@ -86,9 +86,9 @@ Vector4d getColor(Vector3d schnittpunkt, ray strahl, model modell, int tIndex, c
 
 		if(!proxybool){
 			if(conf.lighting_rnd_normal){
-				normale(0)+=(double)rand()/RAND_MAX*0.1;
-				normale(1)+=(double)rand()/RAND_MAX*0.1;
-				normale(2)+=(double)rand()/RAND_MAX*0.1;
+				normale(0)+=(0.2*rand()-0.1)/RAND_MAX;
+				normale(1)+=(0.2*rand()-0.1)/RAND_MAX;
+				normale(2)+=(0.2*rand()-0.1)/RAND_MAX;
 				normale.normalize();
 			}
 			long double cosAlpha = normale.dot(P.normalized());
