@@ -1,0 +1,41 @@
+Das Programm sollte über die Kommandozeile gestartet werden, weil es ohne übergebene Parameter nur einen kurzen Hilfstext ausgibt und sich dann beendet. Die gewöhnliche Benutzung erfordert die Angabe einer Modelldatei im xml-Format und einer Ausgabedatei im bmp-Format in dieser Reihenfolge. Die Ausgabedatei muss nicht existieren und wird erzeugt. Es folgt ein Beispiel für eine gültige .xml Modelldatei:
+(Bild: modell_template.xml)
+Die .xml Modelldatei besteht aus vielen teilweise verschachtelten Elementen. Jedes Element wird mit einem Beginn-Auszeichner begonnen und mit einem End-Auszeichner abgeschlossen: <element1>...</element1>. Dazwischen steht entweder ein Wert oder stehen weitere Elemente. Es folgen die Erklärungen der Elemente:
+conf:
+Die Elemente in conf können die Werte null oder eins annehmen und aktivieren oder deaktivieren somit verschiedene Effekte bei der Berechnung.
+lighting:
+Berechnung diffuser Reflektionen unabhängig vom Ort des Betrachters.
+lighting_rnd_normal:
+Normalen werden nicht mehr aus den Koordinaten des Dreiecks sondern zufällig berechnet.
+no_progress:
+Verbergen des aktuellen Fortschritts.
+reflection:
+Berechnung gerichteter Reflektionen abhängig vom Ort des Betrachters.
+B:
+Vektor vom Nullpunkt zum Kamerapunkt.
+S:
+Vektor vom Kamerapunkt zum Mittelpunkt des Sichtfensters.
+U:
+Richtungsvektor der Vertikalachse der Kamera.
+w:
+Breite des Sichtfensters in Einheiten des Modells (nicht Bildpunkte).
+r:
+Bildseitenverhältniss.
+nx/y:
+Fensterbreite/höhe in Bildpunkten.
+triangles_count:
+Anzahl der angegebenen Dreiecke. Es ist sehr wichtig, dass dieser Wert mit der Anzahl der angegebenen Dreiecke übereinstimmt.
+triangles:
+Wurzelelement für die Dreiecke. Hier werden ein oder mehrere Dreiecke definiert.
+triangle:
+Ein Dreieck.
+color(red, green, blue, alpha):
+Hier wird die Farbe und der Alpha-Kanal des Dreiecks definiert. Gültig sind Werte von null bis eins. Der Alpha-Kanal beeinflusst noch nicht die Berechnung.
+p0-2:
+Hier werden die xyz-Koordinaten der drei Ecken des Dreiecks definiert. Für die Berechnung ist es wichtig, dass man die Koordinaten entgegen dem Uhrzeigersinn definiert, wenn man die beleuchtete Oberseite betrachtet.
+reflection:
+Hier wird die Reflektionsfähigkeit des Dreiecks definiert. Gültig sind Werte von null bis eins.
+lightsources_count:
+Hier wird die Anzahl an definierten Lichtquellen angegeben.
+lightsource:
+Die Lichtquelle wird aus einem color-Element und einem Ursprungsvektor p definiert.
