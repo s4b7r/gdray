@@ -97,21 +97,21 @@ Vector4d getColor(Vector3d schnittpunkt, ray strahl, model modell, int tIndex, c
 		if(!covered){
 
 			if(conf.lighting_rnd_normal){
-				normal_t(0)+=(double)rand()/RAND_MAX*0.1;
-				normal_t(1)+=(double)rand()/RAND_MAX*0.1;
-				normal_t(2)+=(double)rand()/RAND_MAX*0.1;
+				normal_t(0)+=(0.2*rand()-0.1)/RAND_MAX;
+				normal_t(1)+=(0.2*rand()-0.1)/RAND_MAX;
+				normal_t(2)+=(0.2*rand()-0.1)/RAND_MAX;
 				normal_t.normalize();
 			}
 
 			cosAlpha = normal_t.dot(P.normalized());
 
-			// If the angle between P and 'normal_t' is smaller than 90 degrees. TODO: it's not good for some models!
-			//if(acos(cosAlpha) < 1.570796327){
+			// If the angle between P and 'normal_t' is smaller than 90 degrees.
+			if(acos(cosAlpha) < 1.570796327){
 
 				// Compute returning color dependently on 'cosAlpha' (angle of light irradiation).
 				ret += cosAlpha * modell.lightsources[i].color;
 
-			//}
+			}
 
 			// Compute returning color dependently on color of triangle 't'.
 			for(int j=0;j<4;j++){

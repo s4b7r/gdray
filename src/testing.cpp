@@ -674,7 +674,7 @@ void run_test8() {
 
 
 	set1.conf.lighting = 1;
-	set1.conf.reflection = 0;
+	set1.conf.reflection = 1;
 
 
 	for( i = -5; i <= 5; i++ ) {
