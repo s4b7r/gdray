@@ -1,1 +1,8 @@
 {{ Titel: Ausblick / Optimierung }}
+
+{{ Probleme der Funktion "Totalreflektion" }}
+{{ Zeitbedarf }}
+{{ Parallelisierung }}
+{{ Farbberechnung ohne Notwendigkeit }}
+{{ Weitere Funktionen }}
+{{ Reduzierung der zu schneidenden Dreiecke / Teilung des Modells }}
