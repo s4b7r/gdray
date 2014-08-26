@@ -1,3 +1,5 @@
+{{ Titel: Raytracing-Algorithmus }}
+
 Im Folgenden sollen die mathematischen Grundlagen des Raytracing-Verfahrens beschrieben werden.
 
 Die Basis des Raytracings lässt sich grob in die drei Schritte
