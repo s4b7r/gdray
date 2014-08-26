@@ -2,15 +2,15 @@ Das Programm sollte über die Kommandozeile gestartet werden, weil es ohne über
 (Bild: modell_template.xml)
 Die .xml Modelldatei besteht aus vielen teilweise verschachtelten Elementen. Jedes Element wird mit einem Beginn-Auszeichner begonnen und mit einem End-Auszeichner abgeschlossen: <element1>...</element1>. Dazwischen steht entweder ein Wert oder stehen weitere Elemente. Es folgen die Erklärungen der Elemente:
 conf:
-Die Elemente in conf können die Werte null oder eins annehmen und aktivieren oder deaktivieren somit verschiedene Effekte bei der Berechnung.
+Die Elemente in conf können die Werte Null oder Eins annehmen und aktivieren oder deaktivieren somit verschiedene Effekte bei der Berechnung.
 lighting:
-Berechnung diffuser Beleuchtung unabhängig vom Ort des Betrachters.
+Berechnung diffuser Reflexionen unabhängig vom Ort des Betrachters.
 lighting_rnd_normal:
-Normalen werden um kleine, zufällige Werte manipuliert, um eine Art "Pseudo-Oberflächenstruktur" zu generieren.
+Normalen werden nicht mehr aus den Koordinaten des Dreiecks sondern zufällig berechnet.
 no_progress:
 Verbergen des aktuellen Fortschritts.
 reflection:
-Berechnung gerichteter Reflektionen abhängig vom Ort des Betrachters.
+Berechnung gerichteter Reflexionen abhängig vom Ort des Betrachters.
 B:
 Vektor vom Nullpunkt zum Kamerapunkt.
 S:
@@ -30,11 +30,11 @@ Wurzelelement für die Dreiecke. Hier werden ein oder mehrere Dreiecke definiert
 triangle:
 Ein Dreieck.
 color(red, green, blue, alpha):
-Hier wird die Farbe und der Alpha-Kanal des Dreiecks definiert. Gültig sind Werte von null bis eins. Der Alpha-Kanal beeinflusst noch nicht die Berechnung.
+Hier wird die Farbe und der Alpha-Kanal des Dreiecks definiert. Gültig sind Werte von Null bis Eins. Der Alpha-Kanal beeinflusst noch nicht die Berechnung.
 p0-2:
 Hier werden die xyz-Koordinaten der drei Ecken des Dreiecks definiert. Für die Berechnung ist es wichtig, dass man die Koordinaten entgegen dem Uhrzeigersinn definiert, wenn man die beleuchtete Oberseite betrachtet.
 reflection:
-Hier wird die Reflektionsfähigkeit des Dreiecks definiert. Gültig sind Werte von null bis eins.
+Hier wird die Reflexionsfähigkeit des Dreiecks definiert. Gültig sind Werte von Null bis Eins.
 lightsources_count:
 Hier wird die Anzahl an definierten Lichtquellen angegeben.
 lightsource:
