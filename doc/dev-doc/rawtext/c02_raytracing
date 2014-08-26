@@ -1,0 +1,57 @@
+Im Folgenden sollen die mathematischen Grundlagen des Raytracing-Verfahrens beschrieben werden.
+
+Die Basis des Raytracings lässt sich grob in die drei Schritte
+1. Berechnung eines einzelnen "Sichtstrahls",
+2. Berechnung eventuell vorhandener Schnittpunkte von Sichtstrahl und Dreiecken und
+3. Berechnung der resultierenden Farbe
+unterteilen. Diese beruhen auf vergleichsweise simplen, mathematischen Grundlagen der Geometrie und linearen Algebra.
+
+-- 1. Berechnung eines einzelnen "Sichtstrahls"
+
+Zur Erzeugung eines Bildes aus einem vorgegebenem Modell, muss die Farbe eines jeden Bildpunktes / Pixels bestimmt werden. Dies ist die Farbe des räumlichen Objektpunktes den ein gedachter Strahl, vom Beobachter durch das jeweilige zu bestimmende Pixel, zuerst trifft. Somit ergibt sich die Vorbedingung des Wissens um eben diesen Strahl. Mathematisch wird ein Strahl bzw. eine Halbgerade beginnend im Punkt C durch den Punkt D beschrieben durch die Gleichung
+X = C + l * (D - C) für alle l >= 0  {{ unicode: ≥ 0x2265 ; ∀ 0x2200 }}.
+In unserem Fall entspricht dem Ausgangspunkt C der Halbgeraden der Kamerapunkt B. Dem Punkt D entspricht der Punkt des zu bestimmenden Pixels im Sichtfenster, nennen wir diesen E. Damit ergibt sich
+X = B + l * (E - B) für alle l >= 0.
+Zur Bestimmung von E ziehen wir nun die bekannten Daten über Kamera und Sichtfenster heran. Über das Sichtfenster sind dessen Breite w in Längeneinheiten des Modells und das Seitenverhältnis r = nx / ny, sowie die Maße nx und ny in Pixel bekannt. Des weiteren sind der die "Hoch-Richtung" der Kamera beschreibende Vektor U und der Vektor S von Kamerapunkt B zum Mittelpunkt des Sichtfensters bekannt. Mittels dieser Bekannten lassen sich die Verschiebungsvektoren dx und dy, für die Verschiebung pro Pixel in die jeweilige Bildrichtung, berechnen.
+dy^ = U^ = U / |U|
+dx^ = S^ x dy^
+h = w / r
+|dx| = w / nx
+|dy| = h / ny
+dx = dx^ * |dx|
+dy = dy^ * |dy|
+Mit diesen lässt sich nun der Punkt E bestimmen durch
+E = B + S + dx * (x - nx / 2 + 0.5) + dy * (y - ny / 2 + 0.5)
+und weiterhin die Gleichung
+X = B + l * (S + dx * (x - nx / 2 + 0.5) + dy * (y - ny / 2 + 0.5))
+der Halbgeraden bzw. des "Sichtstrahls".
+
+-- 2. Berechnung eventuell vorhandener Schnittpunkte von Sichtstrahl und Dreiecken
+
+Um feststellen zu können welches Objekt bzw. genauer welchen Objektpunkt die soeben berechnete Halbgerade beginnend vom Kamerapunkt aus zuerst trifft, müssen Schnittpunkte zwischen der Halbgerade und allen im Modell vorhandenen Dreiecken berechnet werden.
+Sei ein Dreieck beschrieben durch die drei Eckpunkte P0, P1 und P2, so befindet sich der Punkt X in diesem Dreick, wenn gilt:
+X = a0 * P0 + a1 * P1 + a2 * P2 für alle ai >= 0 und sum(ai) = 1
+Durch Nutzung der Bedingung lässt sich diese Gleichung weiter vereinfachen.
+sum(ai) = a0 + a1 + a2 = 1
+=> a2 = 1 - a0 - a1
+=> X = a0 * P0 + a1 * P1 + (1 - a0 - a1) * P2 für alle ai >= 0
+Ein Schnittpunkt zwischen dem Dreieck P0,P1,P2 und der Halbgeraden ergibt sich somit durch das Gleichungssystem
+B + l * (S + dx * (x - nx / 2 + 0.5) + dy * (y - ny / 2 + 0.5)) = a0 * P0 + a1 * P1 + (1 - a0 - a1) * P2 für alle l >= 0 und ai >= 0.
+Zur Lösung des Gleichungssystems mittels der eingesetzten Bibliothek für lineare Algebra "Eigen" überführen wir dieses in ein Gleichungssystem der Form
+A * x = b
+mit
+x = [ l ; a0 ; a1 ]:
+[ -(E-B)*ex^ (P0-P2)*ex^ (P1-P2)*ex^ ; -(E-B)*ey^ (P0-P2)*ey^ (P1-P2)*ey^ ; -(E-B)*ez^ (P0-P2)*ez^ (P1-P2)*ez^ ] * x = [ (B-P2)*ex^ ; (B-P2)*ey^ ; (B-P2)*ez^ ] für alle l >= 0 und ai >= 0
+Der Schnittpunkt berechnet sich anschließend zu
+I = B + l * (S + dx * (x - nx / 2 + 0.5) + dy * (y - ny / 2 + 0.5)).
+
+-- 3. Berechnung der resultierenden Farbe
+
+Die abschließende Bestimmung der Farbe des Pixels erfolgt nun durch die Bestimmung des Schnittpunktes mit minimalem Abstand zum Kamerapunkt. Als Zusatzbedingung gilt, dass der Schnittpunkt nicht zwischen Kamerapunkt und Sichtfenster liegen darf. Dies ist der Fall, wenn gilt l > 1. Die Farbe des nächsten geschnittenen Dreiecks ist die resultierende Farbe bzw. fließt in diese mit ein.
+Die tatsächliche Berechnung der resultierenden Farbe hängt nun von der gewünschten Realitätsnähe bzw. der Komplexität des Algorithmus ab. In der vorliegenden Implementation sind hierfür bisher zwei Möglichkeiten vorgesehen:
+1. Die Farbe des Pixels entspricht der Farbe des Dreiecks.
+Dies ist die simpelste und schnellste Methode.
+2. Die Farbe des Pixels wird abhängig von der Beleuchtung des Schnittpunkts berechnet.
+Diese Methode erfordert mehr Zeit, da weitere Berechnungen vorgenommen werden. Siehe "Diffuse Reflexion und Schatten".
+
+Neben den genannten Methoden wurde eine weitere Komponente des Raytracings implementiert welche die totale Verspiegelung einer Oberfläche simuliert und sich somit ebenfalls auf die Berechnung der Farbe auswirkt. Auf diese wird im folgenden Kapitel eingegangen.
