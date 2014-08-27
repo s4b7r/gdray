@@ -2,12 +2,8 @@
 
 Im folgenden Kapitel wird, in Hinsicht auf bestehende Mängel sowie Herausforderungen, den Optimierungsbedarf und mögliche weitere Funktionen, ein Ausblick auf Erweiterungs- und Anpassungsmöglichkeiten der Implementierung gegeben.
 
-{{ Bildartefakte durch Beleuchtung }}
-
-
-
-
 {{ Zeitbedarf }}
+
 Der Zeitbedarf bzw. Rechenaufwand zur Erzeugung eines Bildes im Raytracing-Verfahren ist unter anderem abhängig von der Anzahl an Dreiecken sowie Lichtquellen im Modell. Dabei können diese je nach Komplexität des gewählten Verfahrens - z.B. Art der Berechnung von Beleuchtung und Reflexion - unterschiedlich starke Auswirkungen auf den Rechenaufwand haben. Ohne weitere Betrachung der Implementierung, von welcher der Rechenaufwand natürlich ebenfalls abhängig ist, lässt sich durch logische Schlussfolgerung bereits grob die Abhängigkeit von Rechenaufwand zu den eben genannten Parametern abschätzen.
 Betrachtet man die Beschreibung des Raytracing-Verfahrens im Kapitel "Raytracing-Algorithmus", so lässt sich einfach eine Abhängigkeit des Rechenaufwands vom Ausmaß des zu erzeugenden Bilds ausmachen:
 "... muss die Farbe eines jeden Bildpunktes / Pixels bestimmt werden."
@@ -24,30 +20,48 @@ Tatsächlich lässt sich der Einfluss der Totalreflexion nicht derart einfach mi
 Nachfolgend findet sich eine Vergleichstabelle von verschiedenen Modellen.
 
 nx | ny | Nd | davon reflektierend | Nl | T/sec | T(normiert)
-___
 256 | 192 | 6 | 1 | 1 |  34 | 
 800 | 600 | 6 | 1 | 1 | 355 |
-
+Eine Anzahl von 0 reflektierenden Dreiecken oder Lichtquellen bedeutet entweder, dass diese im Modell nicht vorhanden waren oder die entsprechende Funktion deaktiviert war.
 
 
 {{ Optimierung }}
 
 Wie im vorherigen Abschnitt beschrieben wurde, benötigen bereits einfache Modelle vergleichsweise viel Rechenleistung oder Rechenzeit zur vollständigen Erzeugung eines Bilds. Daher besteht viel Bedarf zur Optimierung von Raytracing-Verfahren allgemeim und zur Optimierung der vorliegenden Implementierung speziell.
 
-{{ Aktuell: Farbberechnung ohne Notwendigkeit }}
+{{ Farbberechnung ohne Notwendigkeit }}
 
 In der aktuellen Implementierung besteht ein Punkt zur Optimierung darin, dass die Farbe - inklusive Beleuchtung und Totalreflexion - eines Schnittpunkts zwischen "Sichtstrahl" und Objekt, unabhängig von der Notwendigkeit dazu, stets berechnet wird. Dies ist dann der Fall, wenn ein einzelner Strahl mehrere Objekte schneidet. In diesem Fall wäre es nur notwendig die Farbe im Schnittpunkt mit dem nächstem dieser Objekte zu berechnen, die dafür genutzte Methode führt jedoch die Berechnung des Schnittpunkts sowie auch die Berechnung der resultierenden Farbe aus. Die Auswahl des Schnittpunkts mit der geringsten Entfernung zur Kamera erfolgt jedoch erst in der aufrufenden Methode und somit bereits nach der Berechnung der Farbe.
 Durch den Aufbau der Methoden ergeben sich zwei Möglichkeiten der Optimierung. Zum einen kann die Berechnung von Schnittpunkt und Farbe in zwei separate Methoden verteilt werden, ohne zu große Anpassungen am Rest des Programms zu erfordern. Zum anderen kann mit minimalem Aufwand eine bereits vorhandene Möglichkeit die Mindestdistanz zwischen Ausgangspunkt des Strahls und Schnittpunkt festzulegen genutzt werden.
-Zum Zeitpunkt der Erstellung dieser Dokumentation war noch nicht bekannt, ob die Optimierung dieses Punkts ohne Probleme funktioniert. Daher wurde zu Gunsten einer stabilen Implementierung noch keine der Lösungsmöglichkeiten implementiert.
 
+{{ Teilung des Modells }}
 
-{{ Reduzierung der zu schneidenden Dreiecke / Teilung des Modells }}
-
-
+Ein genereller Ansatz zur Optimierung des Raytracing-Verfahrens bedient sich des Wissens darum, dass eine Gerade bzw. Halbgerade stehts gerade verläuft und somit der Raum den diese durchquert begrenzt ist. Sollen zum Beispiel die Schnittpunkte einer Halbgeraden die durch ein Pixel am linken Rand des Sichtfensters verläfut berechnet werden, so können dies keine sein welche auf Dreiecken liegen die, aus der Perspektive der Kamera gesehen, ausschließlich in der rechten Hälfte des Sichtfensters liegen. Verfolgt man nun diesen Zusammenhang und teilt die Menge an Dreiecken in jene welche ausschließlich in der linken Hälfte des Sichtfenster liegen und jene welche ausschließlich in der Rechten liegen, kann man die Menge an Dreiecken mit denen ein Schnittpunkt berechnet werden muss auf diejenige beschränken durch deren Hälfte auch die Halbgerade verläuft. Berücksichtigt werden müssen natürlich zusätzlich die Dreiecke welche in beiden Hälften des Sichtfensters liegen. Diese Aufteilung kann prinzipiell beliegig oft fortgeführt werden, solange noch Dreiecke existieren die in kleinere Teilungen hineinpassen.
+Da die Aufteilung der Dreiecke in bestimmte Gruppen nur einmal zu Beginn berechnet werden muss, bedeutet diese nur einen einmaligen Rechenaufwand und vermeidet gleichzeitig für jedes Pixel eine Vielzahl an Schnittpunktberechnungen. 
 
 {{ Parallelisierung }}
 
-
+Der soeben beschriebene Ansatz zur Aufteilung des Modells bietet gleichzeitig einen konkreten Anhaltspunkt für eine weitere Möglichkeit der Beschleunigung des Raytracings, die Parallelisierung. Stehen mehrere Rechenkerne zur Verfügung kann die Bilderzeugung beispielsweise anhand der zuletzt beschriebenen Teilung des Modells auf mehrere Kerne aufgeteilt werden. Dadurch wird die benötigte Rechenzeit nahezu auf einen entsprechenden Bruchteil reduziert.
+Da Raytracing auch in anderen Bereichen stets ähnliche bis identische Berechnungen druchführt die voneinander vollkommen unabhängig sind, bietet das Verfahren neben dem eben aufgeführten weitere Anhaltspunkte für die Ausnutzung paralleler Rechenkapazitäten. Beispielsweise können die Berechnungen von Schnittpunkten beliebiger Kombinationen aus Halbgerade und Dreiecken des Modells auf verschiedene Kerne verteilt werden, da sich keine der Berechnungen auf eine der anderen auswirkt.
+Eine Einschränkung der Parallelisierung besteht allerdings im Zeitaufwand der Kommunikation zwischen den Kernen, welche mindestens zur Verteilung der Berechnungen und Daten, sowie zur Zusammenführung der Ergebnisse notwendig ist. Hierbei gilt es das Maß an Parallelität zu finde bei dem möglichst viel Rechenaufwand verteilt wird, aber gleichzeitig möglichst wenig Kommunikation die Zeitersparniss wieder ausgleicht.
 
 
 {{ Weitere Funktionen }}
+
+Die im Rahmen dieser Hausarbeit implementierten Funktionen zum Raytracing stellen im Blick auf das gesamte Feld des Ratraycings nur einen Bruchteil der Möglichkeiten dar. Ebenso gilt dies für die aufgeführten Möglichkeiten der Optimierung und Verbesserung - hier beispielsweise durch Parallelisierung. Hier sollen abschließend noch drei der vielen weiteren Möglichkeiten zur Erweiterung und Beschleunigung des Raytracings kurz angerissen werden.
+
+Oberflächentexturen
+Die Dreiecke des Modells sind nicht länger einfarbig, sondern werden mit dem Programm zur Verfügung gestellten Grafiken "überdeckt". Damit werden komplexere Muster möglich, ohne die Notwendigkeit das Modell komplexer zu gestalten.
+Stichwort: Texturmapping, Bumpmapping
+
+Diffuse Totalreflexion
+Die Reflexion wird nicht ausschließlich mit der Normalen der Oberfläche berechnet, sondern über mehrere zufällig variierte, leicht abweichende Normalen gemittelt. Die entstehende Reflexion ist nicht mehr spiegelklar, sondern matter. Zur Veranschaulichung stelle man sich hier eine leicht refelktierende Metallplatte vor.
+
+Teilung der Schattenberechnung
+Der im Abschnitt "Teilung des Modells" beschriebene Ansatz wird auch bei der Berechnung des Schattens verwendet. Ausgehend vom Punkt dessen Beleuchtung es zu berechnen gilt wird das Modell in mehrere Bereich aufgeteilt denen die Dreicke zugeteilt werden können. Schnittpunkte müssen nun nurnoch mit den Dreiecken des Bereichs berechnet werden in dem der ausgehende Strahl liegt.
+
+
+{{ Hinweis zum Stand der Implementierung }}
+
+Zum Zeitpunkt der Erstellung dieser Dokumentation war nicht bekannt wie sich die Implementierung einiger der oben genannten Verbesserungen und Erweiterungen auf die Stabilität des Programms auswirkt und wie schnell sich eventuelle Probleme beheben lassen. Aufgrund der fehlenden Zeit zum Testen wurde daher zugunsten einer stabilen Implementierung zunächst auf deren Umsetzung verzichtet.
+Sollten sich entsprechende Änderungen zur Zeit der Ansicht dennoch bereits in der Implementierung befinden, bitten wir die Abweichung zwischen Implementierung und Dokumentation daher zu entschuldigen.

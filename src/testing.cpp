@@ -427,7 +427,7 @@ void init_test1( set *set ) { loadModel(set, "testoutput/test1.xml"); }
 void init_test2( set *set ) { loadModel(set, "testoutput/test2.xml"); }
 void init_test4( set *set ) { loadModel(set, "testoutput/test4.xml"); }
 void init_test6( set *set ) { loadModel(set, "testoutput/test6.xml"); }
-void init_test7( set *set ) { loadModel(set, "testoutput/test7_2.xml"); }
+void init_test7( set *set ) { loadModel(set, "testoutput/test7_3.xml"); }
 
 void run_test1( int test_no ) {
 
