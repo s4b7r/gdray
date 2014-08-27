@@ -7,3 +7,5 @@ syntax: regexp
 ^\.project$
 syntax: regexp
 ^Debug$
+syntax: regexp
+^GD_Ray$
