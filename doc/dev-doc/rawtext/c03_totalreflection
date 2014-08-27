@@ -1,6 +1,6 @@
 {{ Titel: Totalreflexion }}
 
-Die Möglichkeit Totalreflektion zu berechnen erfordert nur geringfügige Anpassungen der Implementierung, da dies nichts weiter bedeutet als die "Spiegelung" des "Sichtstrahls" an der reflektierenden Oberfläche. Der bereits implementierte Raytracing-Algorithmus muss also nicht weiter modifiziert werden, als eine Berechnung des reflektierten "Sichtstrahls" einzufügen, die Bedingung der Mindestdistanz des Schnittpunkts zu vernachlässigen und die beteiligten Farben miteinander zu verrechnen.
+Die Möglichkeit Totalreflexion zu berechnen erfordert nur geringfügige Anpassungen der Implementierung, da dies nichts weiter bedeutet als die "Spiegelung" des "Sichtstrahls" an der reflektierenden Oberfläche. Der bereits implementierte Raytracing-Algorithmus muss also nicht weiter modifiziert werden, als eine Berechnung des reflektierten "Sichtstrahls" einzufügen, die Bedingung der Mindestdistanz des Schnittpunkts zu vernachlässigen und die beteiligten Farben miteinander zu verrechnen.
 Nehmen wir an die auf die spiegelnde Oberfläche treffende Halbgerade ist beschrieben durch die Gleichung
 X = B + l * F für alle l >= 0
 und der Schnittpunkt I von Halbgerade und Oberfläche ist bekannt.

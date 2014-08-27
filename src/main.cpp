@@ -29,6 +29,8 @@ void standard( char *modelfile, char *outputfile ) {
 
 int main(int argc, char **argv) {
 
+	time_t timeStart, timeEnd;
+
 	if( argc == 2 && !strcmp(argv[1], "--help") ) {
 		// Read this for more details...
 		printf("\n");
@@ -52,10 +54,16 @@ int main(int argc, char **argv) {
 		printf("\n");
 	} else if( argc == 3 && strcmp(argv[1], "--run-test") ) {
 		// Run the standard procedure
+		time(&timeStart);
 		standard(argv[1], argv[2]);
+		time(&timeEnd);
+		printf("\nIt took %f sec to render this image.\n", difftime(timeEnd, timeStart));
 	} else if( (argc == 3 && !strcmp(argv[1], "--run-test")) || DEV_TEST ) {
 		// Run developer's test
+		time(&timeStart);
 		test_start(atoi(argv[2]));
+		time(&timeEnd);
+		printf("\nIt took %d sec to finish test procedure #%d.\n", (int)difftime(timeEnd, timeStart), atoi(argv[2]));
 	} else {
 		// You forgot all the beautiful arguments!
 		printf("General use: GD_Ray MODELFILE OUTPUTFILE\n");

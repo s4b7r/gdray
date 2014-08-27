@@ -15,6 +15,7 @@
 #include <cstdio>
 #include <cstdlib>
 #include <iostream>
+#include <time.h>
 
 // Mini-XML library
 // Read and write XML structures

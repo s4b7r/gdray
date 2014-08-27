@@ -277,7 +277,7 @@ void loadModel( set *set, char *filename ) {
 		m->triangles[c].color(2) = mxmlGetReal(e3);
 		e3 = mxmlFindElement(e2, e2, "alpha", NULL, NULL, MXML_DESCEND_FIRST);
 		m->triangles[c].color(3) = mxmlGetReal(e3);
-
+/*
 		e2 = mxmlFindElement(e1, e1, "normal", NULL, NULL, MXML_DESCEND_FIRST);
 		e3 = mxmlFindElement(e2, e2, "x", NULL, NULL, MXML_DESCEND_FIRST);
 		m->triangles[c].normal(0) = mxmlGetReal(e3);
@@ -285,7 +285,7 @@ void loadModel( set *set, char *filename ) {
 		m->triangles[c].normal(1) = mxmlGetReal(e3);
 		e3 = mxmlFindElement(e2, e2, "z", NULL, NULL, MXML_DESCEND_FIRST);
 		m->triangles[c].normal(2) = mxmlGetReal(e3);
-
+*/
 		for( i = 0; i < 3; i++ ) {
 			sprintf(s, "p%d", i);
 			e2 = mxmlFindElement(e1, e1, s, NULL, NULL, MXML_DESCEND_FIRST);

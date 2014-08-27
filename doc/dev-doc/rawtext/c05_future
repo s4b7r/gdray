@@ -1,8 +1,53 @@
-{{ Titel: Ausblick / Optimierung }}
+{{ Titel: Ausblick }}
 
-{{ Probleme der Funktion "Totalreflektion" }}
+Im folgenden Kapitel wird, in Hinsicht auf bestehende Mängel sowie Herausforderungen, den Optimierungsbedarf und mögliche weitere Funktionen, ein Ausblick auf Erweiterungs- und Anpassungsmöglichkeiten der Implementierung gegeben.
+
+{{ Bildartefakte durch Beleuchtung }}
+
+
+
+
 {{ Zeitbedarf }}
-{{ Parallelisierung }}
-{{ Farbberechnung ohne Notwendigkeit }}
-{{ Weitere Funktionen }}
+Der Zeitbedarf bzw. Rechenaufwand zur Erzeugung eines Bildes im Raytracing-Verfahren ist unter anderem abhängig von der Anzahl an Dreiecken sowie Lichtquellen im Modell. Dabei können diese je nach Komplexität des gewählten Verfahrens - z.B. Art der Berechnung von Beleuchtung und Reflexion - unterschiedlich starke Auswirkungen auf den Rechenaufwand haben. Ohne weitere Betrachung der Implementierung, von welcher der Rechenaufwand natürlich ebenfalls abhängig ist, lässt sich durch logische Schlussfolgerung bereits grob die Abhängigkeit von Rechenaufwand zu den eben genannten Parametern abschätzen.
+Betrachtet man die Beschreibung des Raytracing-Verfahrens im Kapitel "Raytracing-Algorithmus", so lässt sich einfach eine Abhängigkeit des Rechenaufwands vom Ausmaß des zu erzeugenden Bilds ausmachen:
+"... muss die Farbe eines jeden Bildpunktes / Pixels bestimmt werden."
+=> O(nx * ny)
+Weiterhin ist der Einfluss der Anzahl an Dreiecken Nd zu erkennen:
+"... müssen Schnittpunkte zwischen der Halbgerade und allen im Modell vorhandenen Dreiecken berechnet werden."
+=> O(nx * ny * Nd)
+Wird außerdem die Beleuchtung der Schnittpunkte berechnet, fließen hierdurch erneut die Anzahl der Dreicke Nd sowie die Anzahl an Lichtquellen Nl in den Aufwand mit ein. Da für jede Lichtquelle die "Beschattung" durch andere Dreiecke berechnet werden muss, gilt
+O(nx * ny * Nl * Nd^2).
+Einen wesentlichen Teil kann die Berechnung von Totelreflexionen zum Rechenaufwand des Verfahrens beitragen, denn Reflexionen können je nach Modell auch beliebig oft rekursiv auftreten. Nimmt man der Einfachheit halber an die Anzahl an Totalreflexionen pro Strahl durch ein Pixel wäre bekannt und bezeichnet diese mit Nr, ergibt sich stark vereinfacht
+O(nx * ny * (Nl * Nd^2)^Nr).
+Tatsächlich lässt sich der Einfluss der Totalreflexion nicht derart einfach mit dem Aufwand in Abhängigkeit stellen, da nicht zwangsläufig jeder Strahl auf eine reflektierende Oberfläche trifft. Es bleibt jedoch festzuhalten, dass mit der Totalreflexion die Möglichkeit besteht eine nahezu unendliche Komplexität zu erreichen und damit auch einen nicht mehr bewältigbaren Rechenaufwand.
+
+Nachfolgend findet sich eine Vergleichstabelle von verschiedenen Modellen.
+
+nx | ny | Nd | davon reflektierend | Nl | T/sec | T(normiert)
+___
+256 | 192 | 6 | 1 | 1 |  34 | 
+800 | 600 | 6 | 1 | 1 | 355 |
+
+
+
+{{ Optimierung }}
+
+Wie im vorherigen Abschnitt beschrieben wurde, benötigen bereits einfache Modelle vergleichsweise viel Rechenleistung oder Rechenzeit zur vollständigen Erzeugung eines Bilds. Daher besteht viel Bedarf zur Optimierung von Raytracing-Verfahren allgemeim und zur Optimierung der vorliegenden Implementierung speziell.
+
+{{ Aktuell: Farbberechnung ohne Notwendigkeit }}
+
+In der aktuellen Implementierung besteht ein Punkt zur Optimierung darin, dass die Farbe - inklusive Beleuchtung und Totalreflexion - eines Schnittpunkts zwischen "Sichtstrahl" und Objekt, unabhängig von der Notwendigkeit dazu, stets berechnet wird. Dies ist dann der Fall, wenn ein einzelner Strahl mehrere Objekte schneidet. In diesem Fall wäre es nur notwendig die Farbe im Schnittpunkt mit dem nächstem dieser Objekte zu berechnen, die dafür genutzte Methode führt jedoch die Berechnung des Schnittpunkts sowie auch die Berechnung der resultierenden Farbe aus. Die Auswahl des Schnittpunkts mit der geringsten Entfernung zur Kamera erfolgt jedoch erst in der aufrufenden Methode und somit bereits nach der Berechnung der Farbe.
+Durch den Aufbau der Methoden ergeben sich zwei Möglichkeiten der Optimierung. Zum einen kann die Berechnung von Schnittpunkt und Farbe in zwei separate Methoden verteilt werden, ohne zu große Anpassungen am Rest des Programms zu erfordern. Zum anderen kann mit minimalem Aufwand eine bereits vorhandene Möglichkeit die Mindestdistanz zwischen Ausgangspunkt des Strahls und Schnittpunkt festzulegen genutzt werden.
+Zum Zeitpunkt der Erstellung dieser Dokumentation war noch nicht bekannt, ob die Optimierung dieses Punkts ohne Probleme funktioniert. Daher wurde zu Gunsten einer stabilen Implementierung noch keine der Lösungsmöglichkeiten implementiert.
+
+
 {{ Reduzierung der zu schneidenden Dreiecke / Teilung des Modells }}
+
+
+
+{{ Parallelisierung }}
+
+
+
+
+{{ Weitere Funktionen }}
