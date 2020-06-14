@@ -35,9 +35,9 @@ int main(int argc, char **argv) {
 		// Read this for more details...
 		printf("\n");
 		printf("GD_Ray\n");
-		printf("Simple raytracer by Simon Bekemeier and Kevin ***REMOVED***,\n");
+		printf("Simple raytracer by Simon Bekemeier and Kevin xxxxxxxx,\n");
 		printf("developed within computer graphics II course 2014\n");
-		printf("lectured by Prof. Dr. math. ***REMOVED*** ***REMOVED***\n");
+		printf("lectured by Prof. Dr. xxxxx xxxxx xxxxx\n");
 		printf("at Bielefeld University of Applied Sciences - \n");
 		printf("Department of Engineering Sciences and Mathematics.\n");
 		printf("\n");
